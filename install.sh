@@ -2,15 +2,15 @@
 FROM python:3.9
 
 # Устанавливаем нужные утилиты
-RUN apt-get update && apt-get install -y curl gnupg2 apt-transport-https
+RUN apt-get update && apt-get install -y curl gnupg2 apt-transport-https software-properties-common
 
-# Добавляем ключ и репозиторий Microsoft
+# Добавляем ключ Microsoft и репозиторий для Debian 11 (bullseye)
 RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    echo "deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main" > /etc/apt/sources.list.d/mssql-release.list && \
+    add-apt-repository "$(curl -fsSL https://packages.microsoft.com/config/debian/11/prod.list)" && \
     apt-get update
 
 # Устанавливаем ODBC-драйвер и зависимости
-RUN ACCEPT_EULA=Y apt-get install -y unixodbc-dev msodbcsql17
+RUN ACCEPT_EULA=Y apt-get install -y unixodbc unixodbc-dev msodbcsql18
 
 # Устанавливаем зависимости Python
 WORKDIR /app
