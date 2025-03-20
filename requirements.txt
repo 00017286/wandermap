@@ -12,4 +12,3 @@ selenium
 webdriver_manager
 stripe
 gunicorn
-unixodbc
