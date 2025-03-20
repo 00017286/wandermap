@@ -43,8 +43,16 @@ swagger = Swagger(app)
 CORS(app, resources={r"/admin-sign-in": {"origins": "*"}})
 
 # Database connection settings
-app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver={ODBC Driver 18 for SQL Server}&trusted_connection=yes"
+app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable SQLAlchemy modification tracking for performance improvement
+
+conn_str = "DRIVER=ODBC Driver 17 for SQL Server;SERVER=DESKTOP-RC369C7\\SQLEXPRESS01;DATABASE=WanderMap_DB;Trusted_Connection=yes"
+try:
+    conn = pyodbc.connect(conn_str)
+    print("✅ Успешное подключение к базе!")
+    conn.close()
+except pyodbc.Error as e:
+    print("❌ Ошибка подключения:", e)
 
 # Initialize database object for interacting with db
 db = SQLAlchemy(app)
