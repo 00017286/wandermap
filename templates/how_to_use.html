@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderMap - How To Use</title>
+    <link rel="icon" href="{{ url_for('static', filename='/images/favicon.png') }}">
+
+    <link rel="stylesheet" href="./static/styles.css">
+</head>
+<body id="how-to-use-page">
+    <header>
+        <nav class="main-nav">
+            <div class="logo"><a href="{{ url_for('home') }}">WanderMap</a></div>
+            <a href="{{ url_for('explore_maps') }}">Explore Maps</a>
+            <a href="{{ url_for('how_to_use') }}">How to Use</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>How To Use</h1>
+        <h3>Bla bla bla</h3>
+        <article>Bla bla bla</article>
+    </div>
+
+    <footer>
+        <div class="logo">WanderMap</div>
+        <nav>
+            <a href="{{ url_for('explore_maps') }}">Explore Maps</a>
+            <a href="{{ url_for('how_to_use') }}">How to Use</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+        </nav>
+        <div class="socials">
+            <a href="https://www.instagram.com/freken_snorki/"><img src="{{ url_for('static', filename='images/logo/instagram_logo.png') }}" alt="Instagram"></a>
+            <a href="https://facebook.com"><img src="{{ url_for('static', filename='images/logo/facebook_logo.png') }}" alt="Facebook"></a>
+            <a href="https://t.me/mtimiyf"><img src="{{ url_for('static', filename='images/logo/telegram_logo.png') }}" alt="Telegram"></a>
+        </div>
+        <div class="rights">© 2024 WanderMap. All rights reserved.</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

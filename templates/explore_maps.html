@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderMap - Explore Maps</title>
+    <link rel="icon" href="{{ url_for('static', filename='/images/favicon.png') }}">
+
+    <link rel="stylesheet" href="./static/styles.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body id="explore-maps-page">
+    <header>
+        <nav class="main-nav">
+            <div class="logo"><a href="{{ url_for('home') }}">WanderMap</a></div>
+            <a href="{{ url_for('explore_maps') }}">Explore Maps</a>
+            <a href="{{ url_for('how_to_use') }}">How to Use</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>Explore Maps from WanderMap travellers</h1>
+        <h3>Log in to add ratings and comments to maps!</h3>
+        
+        <div>
+            <select id="sortOptions">
+                <option value="default">Sort by creation date (Old to New)</option>
+                <option value="rating-desc">Sort by rating (High to Low)</option>
+                <option value="rating-asc">Sort by rating (Low to High)</option>
+            </select>
+
+            <input type="text" id="search-input" placeholder="Search maps..." onkeyup="searchMaps()">
+        </div>
+
+        <div id="mapList">
+        </div>
+
+        <button id="scrollToTop">Go Up</button>
+    </div>
+
+    <footer>
+        <div class="logo">WanderMap</div>
+        <nav>
+            <a href="{{ url_for('explore_maps') }}">Explore Maps</a>
+            <a href="{{ url_for('how_to_use') }}">How to Use</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+        </nav>
+        <div class="socials">
+            <a href="https://www.instagram.com/freken_snorki/"><img src="{{ url_for('static', filename='images/logo/instagram_logo.png') }}" alt="Instagram"></a>
+            <a href="https://facebook.com"><img src="{{ url_for('static', filename='images/logo/facebook_logo.png') }}" alt="Facebook"></a>
+            <a href="https://t.me/mtimiyf"><img src="{{ url_for('static', filename='images/logo/telegram_logo.png') }}" alt="Telegram"></a>
+        </div>
+        <div class="rights">© 2024 WanderMap. All rights reserved.</div>
+    </footer>
+
+    <div id="viewMapPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <span id="viewClosePopup" class="close-btn">&times;</span>
+            <h2 id="viewMapTitle"></h2>
+            <div class="popup-body">
+                <div class="popup-text-content" id="maps-descriptions">
+                    <label>Choose waypoint:</label>
+                    <select id="viewWaypointSelect"></select>
+        
+                    <p id="viewWaypointDescription"></p>
+                </div>
+        
+                <div class="popup-map-container" id="maps-images">
+                    <div id="viewImageList" class="imageList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mapIcon" class="map-icon" style="position: fixed; top: 15px; left: 10px; cursor: pointer; display: none;">
+        <img src="/static/images/map-icon.png" alt="View on map" width="40">
+    </div>
+
+    <div id="fullMapPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <div id="fullMapContainer"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='anon-explore-maps-script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_3cfd9756fb1dd70e783de8f8a3032cf4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_3cfd9756fb1dd70e783de8f8a3032cf4" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_3cfd9756fb1dd70e783de8f8a3032cf4 = L.map(
+                "map_3cfd9756fb1dd70e783de8f8a3032cf4",
+                {
+                    center: [20.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 2,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c0bf28a115b8be348bd4deb4dbdab86c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c0bf28a115b8be348bd4deb4dbdab86c.addTo(map_3cfd9756fb1dd70e783de8f8a3032cf4);
+        
+    
+            var marker_11ff9d29121ec58f3f5467a0cd19e109 = L.marker(
+                [52.3634368, 4.9303211],
+                {
+}
+            ).addTo(map_3cfd9756fb1dd70e783de8f8a3032cf4);
+        
+    
+        var popup_fe4c3d0b51e023cb5ee36cf1bddb32d3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9b1fd757b0e6ac7e66ec9425d40eae4a = $(`<div id="html_9b1fd757b0e6ac7e66ec9425d40eae4a" style="width: 100.0%; height: 100.0%;">Bar Botanique Cafe Tropique</div>`)[0];
+                popup_fe4c3d0b51e023cb5ee36cf1bddb32d3.setContent(html_9b1fd757b0e6ac7e66ec9425d40eae4a);
+            
+        
+
+        marker_11ff9d29121ec58f3f5467a0cd19e109.bindPopup(popup_fe4c3d0b51e023cb5ee36cf1bddb32d3)
+        ;
+
+        
+    
+    
+            var marker_c9e7197fcd86496ccab2891e5437e3ef = L.marker(
+                [52.2953159, 4.5900728],
+                {
+}
+            ).addTo(map_3cfd9756fb1dd70e783de8f8a3032cf4);
+        
+    
+        var popup_8ee62e42695cb9fa635f5c845a0bf961 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7c4c3a65fd3347deb5483047a7564568 = $(`<div id="html_7c4c3a65fd3347deb5483047a7564568" style="width: 100.0%; height: 100.0%;">Zwembad de Vosse</div>`)[0];
+                popup_8ee62e42695cb9fa635f5c845a0bf961.setContent(html_7c4c3a65fd3347deb5483047a7564568);
+            
+        
+
+        marker_c9e7197fcd86496ccab2891e5437e3ef.bindPopup(popup_8ee62e42695cb9fa635f5c845a0bf961)
+        ;
+
+        
+    
+    
+            var marker_91168042e7ec8329a69f9a5adef780d1 = L.marker(
+                [52.3656085, 4.8679756],
+                {
+}
+            ).addTo(map_3cfd9756fb1dd70e783de8f8a3032cf4);
+        
+    
+        var popup_16a0134f01f21e60548488d622ecbc9d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d1f7192bd51e4d372b1e9e92132df23d = $(`<div id="html_d1f7192bd51e4d372b1e9e92132df23d" style="width: 100.0%; height: 100.0%;">Bax</div>`)[0];
+                popup_16a0134f01f21e60548488d622ecbc9d.setContent(html_d1f7192bd51e4d372b1e9e92132df23d);
+            
+        
+
+        marker_91168042e7ec8329a69f9a5adef780d1.bindPopup(popup_16a0134f01f21e60548488d622ecbc9d)
+        ;
+
+        
+    
+    
+            var marker_6ff18a461039afc8bf5e1bfe522a6989 = L.marker(
+                [49.007883, 2.550785],
+                {
+}
+            ).addTo(map_3cfd9756fb1dd70e783de8f8a3032cf4);
+        
+    
+        var popup_77870e10ab5f79cdf1418c7ac68dcaf6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c72aff0529a098c54c98b28377b9a0aa = $(`<div id="html_c72aff0529a098c54c98b28377b9a0aa" style="width: 100.0%; height: 100.0%;">Aeropuerto de Paris-Charles de Gaulle (CDG), Руасси-ан-Франс, Франция</div>`)[0];
+                popup_77870e10ab5f79cdf1418c7ac68dcaf6.setContent(html_c72aff0529a098c54c98b28377b9a0aa);
+            
+        
+
+        marker_6ff18a461039afc8bf5e1bfe522a6989.bindPopup(popup_77870e10ab5f79cdf1418c7ac68dcaf6)
+        ;
+
+        
+    
+    
+            var marker_e87191f7a65c3c70c5ea7768f85a5163 = L.marker(
+                [52.316919, 4.745925],
+                {
+}
+            ).addTo(map_3cfd9756fb1dd70e783de8f8a3032cf4);
+        
+    
+        var popup_d8e09935efb4bf03346a5b2e693177d2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b5d5d9fdd5d7cc06a9f6e40cdd3eb27f = $(`<div id="html_b5d5d9fdd5d7cc06a9f6e40cdd3eb27f" style="width: 100.0%; height: 100.0%;">Amsterdam Airport Schiphol (AMS), Aankomstpassage, Схипхол, Нидерланды</div>`)[0];
+                popup_d8e09935efb4bf03346a5b2e693177d2.setContent(html_b5d5d9fdd5d7cc06a9f6e40cdd3eb27f);
+            
+        
+
+        marker_e87191f7a65c3c70c5ea7768f85a5163.bindPopup(popup_d8e09935efb4bf03346a5b2e693177d2)
+        ;
+
+        
+    
+    
+            var marker_90254c6a47c2c759ac57e1aa93f74861 = L.marker(
+                [22.319304, 114.169361],
+                {
+}
+            ).addTo(map_3cfd9756fb1dd70e783de8f8a3032cf4);
+        
+    
+        var popup_24a85436393b679326263739205e1cbc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4297494f19469aece30f2e6370ba00b6 = $(`<div id="html_4297494f19469aece30f2e6370ba00b6" style="width: 100.0%; height: 100.0%;">Hong Kong</div>`)[0];
+                popup_24a85436393b679326263739205e1cbc.setContent(html_4297494f19469aece30f2e6370ba00b6);
+            
+        
+
+        marker_90254c6a47c2c759ac57e1aa93f74861.bindPopup(popup_24a85436393b679326263739205e1cbc)
+        ;
+
+        
+    
+    
+            map_3cfd9756fb1dd70e783de8f8a3032cf4.fitBounds(
+                [[52.3634368, 4.9303211], [52.2953159, 4.5900728], [52.3656085, 4.8679756], [49.007883, 2.550785], [52.316919, 4.745925], [22.319304, 114.169361]],
+                {}
+            );
+        
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderMap - Admin page</title>
+    <link rel="icon" href="{{ url_for('static', filename='/images/favicon.png') }}">
+
+    <link rel="stylesheet" href="./static/styles.css">
+</head>
+<body id="admin-home-page">
+    <header>
+        <nav class="main-nav">
+            <div class="logo"><a>WanderMap</a></div>
+        </nav>
+        <nav>
+            <a href="{{ url_for('home') }}" type="signBtn">Sign Out</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>Manage Travellers and Maps records</h1>
+        <h3>Block travellers or delete their maps in case of any violations</h3>
+
+        <input type="text" id="search-input" placeholder="Search travellers or maps..." onkeyup="searchTravellers()">
+
+        <div id="traveller-list"></div>
+    </div>
+
+    <footer>
+        <div class="logo">WanderMap</div>
+        <div class="socials">
+            <a href="https://www.instagram.com/freken_snorki/"><img src="{{ url_for('static', filename='images/logo/instagram_logo.png') }}" alt="Instagram"></a>
+            <a href="https://facebook.com"><img src="{{ url_for('static', filename='images/logo/facebook_logo.png') }}" alt="Facebook"></a>
+            <a href="https://t.me/mtimiyf"><img src="{{ url_for('static', filename='images/logo/telegram_logo.png') }}" alt="Telegram"></a>
+        </div>
+        <div class="rights">© 2024 WanderMap. All rights reserved.</div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='admin-script.js') }}" defer></script>
+</body>
+</html>

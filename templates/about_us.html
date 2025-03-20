@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderMap - About us</title>
+    <link rel="icon" href="{{ url_for('static', filename='/images/favicon.png') }}">
+
+    <link rel="stylesheet" href="./static/styles.css">
+</head>
+<body id="about-us-page">
+    <header>
+        <nav class="main-nav">
+            <div class="logo"><a href="{{ url_for('home') }}">WanderMap</a></div>
+            <a href="{{ url_for('explore_maps') }}">Explore Maps</a>
+            <a href="{{ url_for('how_to_use') }}">How to Use</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>About Us</h1>
+        <h3>
+            About Me
+        </h3>
+        <article>
+            Welcome to my personal website! My name is Polina, and I'm passionate about travelling. With a deep interest in documenting and sharing my journeys, I've dedicated myself to develop a platform where travellers can become a part of world community by creating their travel maps. I believe in the power of technology and creativity to make a real difference, and I'm constantly learning to enhance my expertise.
+        </article>
+        <h3>
+            Mission and Values
+        </h3>
+        <article>
+            My mission is to help people shift from old-fashioned paper to convenient and modern digital diaries when it comes to their trips. I am deeply committed to integrity and innovation and believe that true success comes from making a meaningful impact. Whether it's through coding or travelling the world, I am always focused on delivering results that matter to both individuals and communities.   
+        </article>
+        <h3>
+            Personal Philosophy
+        </h3>
+        <article>
+            I believe that the greatest character development is gained through new experiences, which drives me to approach every challenge with curiosity. Outside of work, I enjoy searching the net to add new places to my bucket list, and I find that this activity helps me stay inspired and open to the bigger picture. My journey is ongoing, and I look forward to sharing more of my story with you as it evolves.    
+        </article>
+        <h3>
+            Contact Me
+        </h3>
+        <article>
+            I'm always open to new ideas, collaborations, and opportunities to connect with like-minded individuals. Feel free to reach out if you have any questions or just want to say hello. You can contact me at polinadolgopolova@gmail.com or follow my work on <a href="https://www.instagram.com/freken_snorki/">instagram</a>.    
+        </article>
+    </div>
+
+    <footer>
+        <div class="logo">WanderMap</div>
+        <nav>
+            <a href="{{ url_for('explore_maps') }}">Explore Maps</a>
+            <a href="{{ url_for('how_to_use') }}">How to Use</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+        </nav>
+        <div class="socials">
+            <a href="https://www.instagram.com/freken_snorki/"><img src="{{ url_for('static', filename='images/logo/instagram_logo.png') }}" alt="Instagram"></a>
+            <a href="https://facebook.com"><img src="{{ url_for('static', filename='images/logo/facebook_logo.png') }}" alt="Facebook"></a>
+            <a href="https://t.me/mtimiyf"><img src="{{ url_for('static', filename='images/logo/telegram_logo.png') }}" alt="Telegram"></a>
+        </div>
+        <div class="rights">© 2024 WanderMap. All rights reserved.</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

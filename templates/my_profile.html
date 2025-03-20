@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderMap - My Profile</title>
+    <link rel="icon" href="{{ url_for('static', filename='/images/favicon.png') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body id="my-profile-page">
+    <header>
+        <nav class="main-nav">
+            <div class="logo"><a href="{{ url_for('user_home', username=traveller.userName) }}">WanderMap</a></div>
+            <a href="{{ url_for('user_explore_maps', username=traveller.userName) }}">Explore Maps</a>
+            <a href="{{ url_for('user_how_to_use', username=traveller.userName) }}">How to Use</a>
+            <a href="{{ url_for('user_about_us', username=traveller.userName) }}">About Us</a>
+        </nav>
+        <nav>
+            <a href="{{ url_for('my_maps', username=traveller.userName) }}" type="signBtn">My Maps</a>
+            <a href="{{ url_for('my_profile', username=traveller.userName) }}" type="signBtn">My Profile</a>
+            <a href="{{ url_for('home') }}" type="signBtn">Sign Out</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>My Profile</h1>
+        <h3>Please, fill in all the fields so <wandermap>Wandermap</wandermap> can recommend you places that suit you best!</h3>
+        <div>
+            <form id="profile-form">
+                <div class="form-group">
+                    <label for="userName">Username</label>
+                    <input type="text" id="profile_username" name="userName" readonly value="{{ traveller.userName or '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="profile_password" name="password" readonly value="******">
+                </div>
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                    <input type="text" id="name" name="name" value="{{ traveller.name or '' }}" placeholder="Enter your first name">
+                </div>
+                <div class="form-group">
+                    <label for="surname">Last Name</label>
+                    <input type="text" id="surname" name="surname" value="{{ traveller.surname or '' }}" placeholder="Enter your last name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <p style="color: rgb(181, 36, 17); background-color: rgba(255, 255, 255, 0.217);">Please, add email to be able to restore your profile!</p>
+                    <input type="email" id="email" name="email" value="{{ traveller.email or '' }}" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" value="{{ traveller.dateOfBirth or '' }}" >
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select</option>
+                        <option value="male" {% if traveller.gender in ['Male', 'male'] %} selected {% endif %}>Male</option>
+                        <option value="female" {% if traveller.gender in ['Female', 'female'] %} selected {% endif %}>Female</option>
+                        <option value="other" {% if traveller.gender in ['Other', 'other'] %} selected {% endif %}>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="maritalState">Marital Status</label>
+                    <select id="maritalState" name="maritalState">
+                        <option value="">Select</option>
+                        <option value="single" {% if traveller.maritalState in ['Single', 'single'] %} selected {% endif %}>Single</option>
+                        <option value="married" {% if traveller.maritalState in ['Married', 'married'] %} selected {% endif %}>Married</option>
+                        <option value="divorced" {% if traveller.maritalState in ['Divorced', 'divorced'] %} selected {% endif %}>Divorced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hasKids"><input type="checkbox" id="hasKids" name="hasKids" {% if traveller.hasKids %}checked{% endif %}> I have kid(s)</label>
+                </div>
+                <div class="form-group">
+                    <label for="hasPets"><input type="checkbox" id="hasPets" name="hasPets" {% if traveller.hasPets %}checked{% endif %}> I have pet(s)</label>
+                </div>
+                <div class="form-group">
+                    <label for="extrovert"><input type="checkbox" id="extrovert" name="extrovert" {% if traveller.extrovert %}checked{% endif %}> I'm an extrovert</label>
+                </div>
+                <div class="form-group">
+                    <label for="natureLover"><input type="checkbox" id="natureLover" name="natureLover" {% if traveller.natureLover %}checked{% endif %}> I'm a nature lover</label>
+                </div>
+                <div class="form-group">
+                    <label for="museumLover"><input type="checkbox" id="museumLover" name="museumLover" {% if traveller.museumLover %}checked{% endif %}> I enjoy sightseeing</label>
+                </div>
+                <div class="form-group">
+                    <label for="sportLover"><input type="checkbox" id="sportLover" name="sportLover" {% if traveller.sportLover %}checked{% endif %}> I'm into sports</label>
+                </div>
+                
+                <button type="submit" id="saveChanges">Save Changes</button>
+            </form>
+        </div>
+        
+        <div class="subscription-info">
+            <h1>WanderMap monthly subscription</h1>
+            <h3>Premium functions you get:</h3>
+            <ul>
+                <li>Get access to the full library of travel maps!</li>
+                <li>Write and view others' map reviews!</li>
+                <li>Download your maps in PDF format to share them with friends!</li>
+                <p> </p>
+                <strong>Unlock all premium features for just $5 per month!</strong>
+            </ul>
+            <p>
+                 
+            </p>
+            
+            {% if traveller.subscription %}
+                <button id="unsubscribe-button" type="button">Unsubscribe on WanderMap</button>
+            {% else %}
+                <button id="subscribe-button" type="submit">Subscribe on WanderMap</button>
+            {% endif %}
+            
+        </div>
+
+        {% if not traveller.subscription %}
+            <button id="subscribe" type="button">GO PREMIUM</button>
+        {% endif %}
+
+    </div>
+
+    <footer>
+        <div class="logo">WanderMap</div>
+        <nav>
+            <a href="{{ url_for('user_explore_maps', username=traveller.userName) }}">Explore Maps</a>
+            <a href="{{ url_for('user_how_to_use', username=traveller.userName) }}">How to Use</a>
+            <a href="{{ url_for('user_about_us', username=traveller.userName) }}">About Us</a>
+        </nav>
+        <div class="socials">
+            <a href="https://www.instagram.com/freken_snorki/"><img src="{{ url_for('static', filename='images/logo/instagram_logo.png') }}" alt="Instagram"></a>
+            <a href="https://facebook.com"><img src="{{ url_for('static', filename='images/logo/facebook_logo.png') }}" alt="Facebook"></a>
+            <a href="https://t.me/mtimiyf"><img src="{{ url_for('static', filename='images/logo/telegram_logo.png') }}" alt="Telegram"></a>
+        </div>
+        <div class="rights">© 2024 WanderMap. All rights reserved.</div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='profile-script.js') }}" defer></script>
+
+</body>
+</html>

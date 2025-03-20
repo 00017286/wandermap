@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderMap - {{ username }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='/images/favicon.png') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+</head>
+<body id="user-home-page">
+    <header>
+        <nav class="main-nav">
+            <div class="logo"><a href="{{ url_for('user_home', username=username) }}">WanderMap</a></div>
+            <a href="{{ url_for('user_explore_maps', username=username) }}">Explore Maps</a>
+            <a href="{{ url_for('user_how_to_use', username=username) }}">How to Use</a>
+            <a href="{{ url_for('user_about_us', username=username) }}">About Us</a>
+        </nav>
+        <nav>
+            <a href="{{ url_for('my_maps', username=username) }}" type="signBtn">My Maps</a>
+            <a href="{{ url_for('my_profile', username=username) }}" type="signBtn">My Profile</a>
+            <a href="{{ url_for('logout') }}" type="signBtn">Sign Out</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>Welcome, {{ username }}!</h1>
+        <div class="gallery">
+            <button class="arrow left" onclick="prevSlide()">←</button>
+            <div class="slides-container">
+                <div class="slides">
+                    <img src="{{ url_for('static', filename='images/gallery/travel1.jpg') }}" alt="Gallery Image 1" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel2.jpg') }}" alt="Gallery Image 2" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel3.jpg') }}" alt="Gallery Image 3" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel4.jpg') }}" alt="Gallery Image 4" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel5.jpg') }}" alt="Gallery Image 5" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel6.jpg') }}" alt="Gallery Image 6" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel7.jpg') }}" alt="Gallery Image 7" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel8.jpg') }}" alt="Gallery Image 8" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel9.jpg') }}" alt="Gallery Image 9" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel10.jpg') }}" alt="Gallery Image 10" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel11.jpg') }}" alt="Gallery Image 11" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel12.jpg') }}" alt="Gallery Image 12" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel13.jpg') }}" alt="Gallery Image 13" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel14.jpg') }}" alt="Gallery Image 14" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel15.jpg') }}" alt="Gallery Image 15" class="slide">
+                </div>
+            </div>
+            <button class="arrow right" onclick="nextSlide()">→</button>
+        </div>
+
+    </div>
+    <section class="main-content">
+        <h2 id="target">Create Your Travel Diary With <wandermap>Wandermap</wandermap></h2>
+
+        <div class="background">
+            <img src="{{ url_for('static', filename='images/forest-background.jpg') }}" alt="Background" class="background-image">
+            <button id="button-1" class="map-button">1 / Add Waypoints</button>
+            <button id="button-2" class="map-button">2 / Observe Recommendations</button>
+            <button id="button-3" class="map-button">3 / Adjust Waypoints' Order</button>
+            <button id="button-4" class="map-button">4 / Add Text & Image Descriptions</button>
+            <button id="button-5" class="map-button">5 / Save Map</button>
+
+        </div>
+
+        
+        <button id="subscribe" type="button">GO PREMIUM</button>
+    </section>
+
+    <footer>
+        <div class="logo">WanderMap</div>
+        <nav>
+            <a href="{{ url_for('user_explore_maps', username=username) }}">Explore Maps</a>
+            <a href="{{ url_for('user_how_to_use', username=username) }}">How to Use</a>
+            <a href="{{ url_for('user_about_us', username=username) }}">About Us</a>
+        </nav>
+        <div class="socials">
+            <a href="https://www.instagram.com/freken_snorki/"><img src="{{ url_for('static', filename='images/logo/instagram_logo.png') }}" alt="Instagram"></a>
+            <a href="https://facebook.com"><img src="{{ url_for('static', filename='images/logo/facebook_logo.png') }}" alt="Facebook"></a>
+            <a href="https://t.me/mtimiyf"><img src="{{ url_for('static', filename='images/logo/telegram_logo.png') }}" alt="Telegram"></a>
+        </div>
+        <div class="rights">© 2024 WanderMap. All rights reserved.</div>
+    </footer>
+
+
+    <div id="addWaypointsPopup" class="popup" style="display: none;">
+        <div id="map-create-content" class="popup-content">
+            <span id="closePopup" class="close-btn">&times;</span>
+            <h2>Add Waypoints to your Map</h2>
+            <h3>No coordinates are required - we'll get them for you!</h3>
+            
+            <div class="popup-body">
+                <div class="popup-text-content">
+                    <form id="waypointForm">
+                        <div style="position: relative;">
+                            <label for="newWaypoint">New waypoint: </label>
+                            <input type="text" id="newWaypoint" placeholder="Enter waypoint name" />
+                            <ul id="suggestionsList"></ul>
+                        </div>
+                        <div>
+                            <button type="submit" id="getCoordinates">Get coordinates</button>
+                            <br>
+                            <label>Coordinates: </label>
+                            <input id="latitude" type="text" placeholder="Enter latitude" />
+                            <input id="longitude" type="text" placeholder="Enter longitude" />
+                            <h5>P.S. you can change coordinates if we didn't get them right</h5>
+                            <button type="submit" id="addWaypoint">Add Waypoint</button>
+                        </div>
+                    </form>
+                </div>
+    
+                <div class="popup-map-container">
+                    <div id="map"></div>
+                    <div>
+                        <label>Added to your map waypoints:</label>
+                        <ul id="waypointsList"></ul>
+                        <button type="button" id="deleteDraftmap">Clear added Waypoints</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>      
+    
+    <div id="recommendationsPopup" class="popup" style="display: none;">
+        <div id="recommendations-content" class="popup-content">
+          <span id="closeRecommendationsPopup" class="close-btn">&times;</span>
+          <h2>Observe Recommended Waypoints</h2>
+          <h3>Add waypoints that are close to already added ones and which suit you best!</h3>
+          <form id="recommendationsForm">
+            <div id="recommendedWaypointsList"></div>
+            <button type="submit" id="addChosenWaypoints">Add Chosen Waypoints</button>
+          </form>
+        </div>
+    </div>  
+
+    <div id="waypointsOrderPopup" class="popup" style="display: none;">
+        <div id="order-content" class="popup-content">
+            <span id="closeWaypointsOrderPopup" class="close-btn">&times;</span>
+            <h2>Set order of waypoints in your map</h2>
+            <h3>The suggested order is optimal - it is based on shortest distances between waypoints :D</h3>
+            <h4>You are welcome to adjust the route as it suits you by drag-and-drop!</h4>
+            <form id="waypointsOrderForm">
+                <div id="waypointsOrderList"></div>
+                <button type="submit" id="setWaypointsOrder">Set Updated Order</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="waypointPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <span id="closeDescriptionPopup" class="close-btn">&times;</span>
+            <h2>Add descriptions to waypoints in your map</h2>
+            <h3>Add images to make your map more informative and colourful!</h3>
+            <div class="popup-body">
+                <div class="popup-text-content">
+                    <label>Map description:</label>
+                    <input type="text" id="mapDescription" placeholder="Enter map description">
+        
+                    <label>Choose waypoint to describe:</label>
+                    <select id="waypointSelect"></select>
+        
+                    <label>Waypoint description:</label>
+                    <textarea id="waypointDescription" placeholder="Enter waypoint description..."></textarea>
+                </div>
+        
+                <div class="popup-map-container">
+                    <div>
+                        <label for="imageUpload" class="custom-file-upload">Upload Images</label>
+                        <input type="file" id="imageUpload" multiple hidden>
+                    </div>
+        
+                    <label>Waypoint images:</label>
+                    <div id="imageList" class="imageList"></div>
+        
+                    <button id="saveWaypoint">Save</button>
+                    <h4>Note: Save description and images before switching to next waypoint!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmationPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <h2>Are you sure?</h2>
+            <h3>Do you really want to save the map?</h3>
+            <button id="confirmYes" class="popup-button" type="submit">Yes, I'm ready to save!</button>
+            <button id="confirmNo" class="popup-button" type="button">No, maybe later</button>
+        </div>
+    </div>
+
+
+    <div id="preloader" style="display: none;">
+        <div class="loader"></div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn3JWKWIt2LewhXKSj98GoffxlmQvxUmQ&libraries=places"
+        async
+        defer
+    ></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
+</body>
+</html>

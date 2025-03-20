@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderMap - {{ username }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='/images/favicon.png') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body id="user-explore-maps-page">
+    <header>
+        <nav class="main-nav">
+            <div class="logo"><a href="{{ url_for('user_home', username=username) }}">WanderMap</a></div>
+            <a href="{{ url_for('user_explore_maps', username=username) }}">Explore Maps</a>
+            <a href="{{ url_for('user_how_to_use', username=username) }}">How to Use</a>
+            <a href="{{ url_for('user_about_us', username=username) }}">About Us</a>
+        </nav>
+        <nav>
+            <a href="{{ url_for('my_maps', username=username) }}" type="signBtn">My Maps</a>
+            <a href="{{ url_for('my_profile', username=username) }}" type="signBtn">My Profile</a>
+            <a href="{{ url_for('home') }}" type="signBtn">Sign Out</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>Explore Maps from WanderMap travellers</h1>
+        <h3>Rate and comment on maps you find helpful or inpiring!</h3>
+
+        <div>
+            <select id="sortOptions">
+                <option value="default">Sort by creation date (Old to New)</option>
+                <option value="rating-desc">Sort by rating (High to Low)</option>
+                <option value="rating-asc">Sort by rating (Low to High)</option>
+            </select>
+
+            <input type="text" id="search-input" placeholder="Search maps..." onkeyup="searchMaps()">
+        </div>
+
+        <div id="mapList">
+        </div>
+
+        <button id="scrollToTop">Go Up</button>
+    </div>
+
+    <footer>
+        <div class="logo">WanderMap</div>
+        <nav>
+            <a href="{{ url_for('user_explore_maps', username=username) }}">Explore Maps</a>
+            <a href="{{ url_for('user_how_to_use', username=username) }}">How to Use</a>
+            <a href="{{ url_for('user_about_us', username=username) }}">About Us</a>
+        </nav>
+        <div class="socials">
+            <a href="https://www.instagram.com/freken_snorki/"><img src="{{ url_for('static', filename='images/logo/instagram_logo.png') }}" alt="Instagram"></a>
+            <a href="https://facebook.com"><img src="{{ url_for('static', filename='images/logo/facebook_logo.png') }}" alt="Facebook"></a>
+            <a href="https://t.me/mtimiyf"><img src="{{ url_for('static', filename='images/logo/telegram_logo.png') }}" alt="Telegram"></a>
+        </div>
+        <div class="rights">© 2024 WanderMap. All rights reserved.</div>
+    </footer>
+    
+    <div id="viewMapPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <span id="viewClosePopup" class="close-btn">&times;</span>
+            <h2 id="viewMapTitle"></h2>
+            <div class="popup-body">
+                <div class="popup-text-content">
+                    <label>Choose waypoint:</label>
+                    <select id="viewWaypointSelect"></select>
+        
+                    <p id="viewWaypointDescription"></p>
+                </div>
+        
+                <div class="popup-map-container" id="maps-images">
+                    <div id="viewImageList" class="imageList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <button id="subscribe" type="button" style="display: none">GO PREMIUM</button>
+
+    <div id="mapIcon" class="map-icon" style="position: fixed; top: 15px; left: 10px; cursor: pointer; display: none;">
+        <img src="/static/images/map-icon.png" alt="View on map" width="40">
+    </div>
+
+    <div id="fullMapPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <div id="fullMapContainer"></div>
+        </div>
+    </div>
+
+    <div id="ratingPopup" class="rating-popup" style="display: none;">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+    </div>
+
+    <div id="reviewIcon" class="review-icon" style="position: fixed; top: 15px; left: 213px; cursor: pointer; display: none;">
+        <img src="/static/images/review-icon.png" alt="Add review" width="40">
+    </div>
+
+    <div id="reviewPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <h2>Add review to this map!</h2>
+            <h4>Please, be polite and decent when reviewing ;)</h4>
+            <textarea id="reviewDescription" placeholder="Enter map review..."></textarea>
+            <button type="submit" id="saveReview">Save</button>
+
+            <h3>Other travellers reviews:</h3>
+            <div id="otherReviewsContainer" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin: 15px 0px ;">
+                <p id="noReviewsText">No reviews yet. Be the first one!</p>
+                <ul id="otherReviewsList"></ul>
+            </div>
+    </div>
+
+    <div id="subscribePopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <h2>Subscribe on WanderMap!</h2>
+            <h3>Premium functions you get:</h3>
+            <ul>
+                <li>Get access to the full library of travel maps!</li>
+                <li>Write and view others' map reviews!</li>
+                <li>Download your maps in PDF format to share them with friends!</li>
+            </ul>
+            <p>
+                <strong>Unlock all premium features for just $5 per month!</strong>
+            </p>
+            <p>
+                You can cancel anytime from your profile. If you unsubscribe, your access will continue until the end of the current billing period, after which no further charges will be made.
+                If you have any questions, feel free to contact us at
+                <a href="mailto:polinadolgopolova@gmail.com">polinadolgopolova@gmail.com</a>.
+            </p>
+            <button id="subscribeYes" type="submit" class="popup-button">Yes, I'm ready to pay for Premium!</button>
+            <button id="subscribeNo" type="button" class="popup-button">No, maybe later</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='explore-maps-script.js') }}"></script>
+</body>
+</html>

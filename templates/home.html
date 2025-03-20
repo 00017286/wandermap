@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderMap - Home</title>
+    <link rel="icon" href="{{ url_for('static', filename='/images/favicon.png') }}">
+
+    <link rel="stylesheet" href="./static/styles.css">
+</head>
+<body id="home-page">
+    <header>
+        <nav class="main-nav">
+            <div class="logo"><a href="{{ url_for('home') }}">WanderMap</a></div>
+            <a href="{{ url_for('explore_maps') }}">Explore Maps</a>
+            <a href="{{ url_for('how_to_use') }}">How to Use</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+        </nav>
+        <nav>
+            <a href="#" id="adminBtn">For Admins</a>
+            <a href="#" type="signBtn" id="signBtn">Sign Up</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>Share Your Journey With Us</h1>
+        <div class="gallery">
+            <button class="arrow left" onclick="prevSlide()">←</button>
+            <div class="slides-container">
+                <div class="slides">
+                    <img src="{{ url_for('static', filename='images/gallery/travel1.jpg') }}" alt="Gallery Image 1" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel2.jpg') }}" alt="Gallery Image 2" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel3.jpg') }}" alt="Gallery Image 3" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel4.jpg') }}" alt="Gallery Image 4" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel5.jpg') }}" alt="Gallery Image 5" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel6.jpg') }}" alt="Gallery Image 6" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel7.jpg') }}" alt="Gallery Image 7" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel8.jpg') }}" alt="Gallery Image 8" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel9.jpg') }}" alt="Gallery Image 9" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel10.jpg') }}" alt="Gallery Image 10" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel11.jpg') }}" alt="Gallery Image 11" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel12.jpg') }}" alt="Gallery Image 12" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel13.jpg') }}" alt="Gallery Image 13" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel14.jpg') }}" alt="Gallery Image 14" class="slide">
+                    <img src="{{ url_for('static', filename='images/gallery/travel15.jpg') }}" alt="Gallery Image 15" class="slide">
+                </div>
+            </div>
+            <button class="arrow right" onclick="nextSlide()">→</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="logo">WanderMap</div>
+        <nav>
+            <a href="{{ url_for('explore_maps') }}">Explore Maps</a>
+            <a href="{{ url_for('how_to_use') }}">How to Use</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+        </nav>
+        <div class="socials">
+            <a href="https://www.instagram.com/freken_snorki/"><img src="{{ url_for('static', filename='images/logo/instagram_logo.png') }}" alt="Instagram"></a>
+            <a href="https://facebook.com"><img src="{{ url_for('static', filename='images/logo/facebook_logo.png') }}" alt="Facebook"></a>
+            <a href="https://t.me/mtimiyf"><img src="{{ url_for('static', filename='images/logo/telegram_logo.png') }}" alt="Telegram"></a>
+        </div>
+        <div class="rights">© 2024 WanderMap. All rights reserved.</div>
+    </footer>
+
+    <div id="adminPopup" class="popup">
+        <div id="sign-in-content" class="popup-content">
+            <h2>Sign In Your Account</h2>
+            <h3>(for admin roles)</h3>
+            <form id="adminForm" action="/admin-sign-in" method="post">
+                <button id="admin_closePopupBtn" class="close-btn">✕</button>
+                <label for="username">Username:</label>
+                <input type="text" id="admin_username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="admin_password" name="password" required>
+                <div class="button-container">
+                    <button type="submit" id="submitBtn">Sign In</button>
+                </div>
+            </form>        
+        </div>
+    </div>
+
+    <div id="userSignInPopup" class="popup">
+        <div id="sign-in-content" class="popup-content">
+            <h2>Sign In Your Account</h2>
+            <h3>(or create new)</h3>
+            <form id="form" action="/user-sign-in" method="post">
+                <button id="closePopupBtn" class="close-btn">✕</button>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <div class="button-container">
+                    <button type="submit" id="userSubmitBtn">Sign In</button>
+                    <button type="button" id="userSignUpBtn">Sign Up</button>
+                </div>
+                <p id="recoverBtn" style="color: olivedrab; margin-top: 20px; cursor: pointer;">Send link to my email to restore my profile</p>
+            </form>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
