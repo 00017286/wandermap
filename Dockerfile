@@ -14,7 +14,8 @@ RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN apt-cache search msodbcsql
 
 # Устанавливаем ODBC-драйвер и зависимости
-RUN ACCEPT_EULA=Y apt-get install -y unixodbc unixodbc-dev odbcinst odbcinst1debian2 msodbcsql17
+RUN ACCEPT_EULA=Y apt-get install -y --fix-missing unixodbc unixodbc-dev odbcinst odbcinst1debian2 msodbcsql17
+
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
