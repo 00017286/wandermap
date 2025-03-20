@@ -10,6 +10,7 @@ from flasgger import Swagger
 from itertools import permutations  # generate all possible orderings of a sequence
 from datetime import datetime, date  # work with date and time
 import pyodbc  # connecting to Microsoft SQL Server
+import pymssql
 import json  # handle JSON data
 import os  # interact with the operating system
 import faiss  # Facebook AI Similarity Search for fast nearest neighbor retrieval
@@ -39,11 +40,13 @@ swagger = Swagger(app)
 CORS(app, resources={r"/admin-sign-in": {"origins": "*"}})
 
 # Database connection settings
-app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pymssql://myuser:mypassword@192.168.100.97:1433/WanderMap_DB'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable SQLAlchemy modification tracking for performance improvement
 
 # Initialize database object for interacting with db
 db = SQLAlchemy(app)
+
 
 # Email sending configuration
 SMTP_SERVER = "smtp.gmail.com"  # SMTP server address
