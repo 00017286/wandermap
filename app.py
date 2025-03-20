@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for
+from flask import Flask, request, jsonify, render_template, redirect, send_from_directory, url_for
 from flask import make_response  # create custom HTTP responses
 from flask import send_file  # send files as responses
 from flask_sqlalchemy import SQLAlchemy  # working with db
