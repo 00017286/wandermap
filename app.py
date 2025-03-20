@@ -32,6 +32,10 @@ stripe.api_key = "sk_test_51R4ftwHy59XGfrcneVpHJ3pk6uHm0nky74BPOrAHxhJBUoujIJfXl
 PRICE_ID = "price_1R4jA9Hy59XGfrcn0HX0vZFf"  
 
 app = Flask(__name__)  # Create instance of Flask application
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory(os.path.join(app.root_path, 'static'), filename)
+
 # Swagger initialization
 swagger = Swagger(app)
 
