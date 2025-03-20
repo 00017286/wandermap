@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const subscribeBtn = document.getElementById("subscribe");
     const username = getUsernameFromCookie();
 
-    fetch(`http://localhost:8000/check-subscription?username=${encodeURIComponent(username)}`, {
+    fetch(`https://wandermap-1i48.onrender.com/check-subscription?username=${encodeURIComponent(username)}`, {
         method: 'GET'
     })
     .then(response => response.json())
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const password = document.getElementById("admin_password").value;
 
         // Send data to the server
-        fetch('http://localhost:8000/admin-sign-in', {
+        fetch('https://wandermap-1i48.onrender.com/admin-sign-in', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const password = document.getElementById("password").value;
 
         // Send data to the server for authentication
-        fetch('http://localhost:8000/user-sign-in', {
+        fetch('https://wandermap-1i48.onrender.com/user-sign-in', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
