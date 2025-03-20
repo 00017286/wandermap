@@ -1,10 +1,17 @@
-# Базовый образ с поддержкой ODBC-драйвера
+# Базовый образ
 FROM python:3.9
 
-# Устанавливаем зависимости
+# Устанавливаем утилиты и зависимости
 USER root
-RUN apt-get update && \
-    ACCEPT_EULA=Y apt-get install -y curl unixodbc-dev msodbcsql17
+RUN apt-get update && apt-get install -y curl gnupg2 apt-transport-https software-properties-common
+
+# Добавляем ключи и репозиторий Microsoft ODBC
+RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    add-apt-repository "$(curl -fsSL https://packages.microsoft.com/config/debian/10/prod.list)" && \
+    apt-get update
+
+# Устанавливаем ODBC-драйвер и зависимости
+RUN ACCEPT_EULA=Y apt-get install -y unixodbc unixodbc-dev msodbcsql17
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
