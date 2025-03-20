@@ -1,19 +1,19 @@
 #!/bin/bash
+
+# Останавливаем выполнение скрипта при ошибке
 set -e
 
-# Обновляем пакеты
-apt-get update
+echo "Начало установки ODBC-драйверов..."
 
-# Устанавливаем unixODBC и зависимости
-apt-get install -y curl gnupg apt-transport-https ca-certificates unixodbc unixodbc-dev odbcinst
+# Создаем директорию для конфигурации ODBC
+mkdir -p ~/.odbcinst
 
-# Добавляем ключи и репозиторий Microsoft
-curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/$(lsb_release -rs)/prod $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/mssql-release.list
+# Добавляем драйвер в конфиг ODBC (обнови путь, если он отличается)
+echo "[ODBC Driver 17 for SQL Server]" > ~/.odbcinst/odbcinst.ini
+echo "Driver=/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.10.so.1.1" >> ~/.odbcinst/odbcinst.ini
 
-# Обновляем пакеты снова и устанавливаем ODBC Driver 17
-apt-get update
-apt-get install -y msodbcsql17
+# Экспортируем переменные окружения для ODBC
+export ODBCINI=~/.odbcinst/odbcinst.ini
+export ODBCSYSINI=~/.odbcinst
 
-# Проверяем, что драйвер установлен
-odbcinst -q -d
+echo "
