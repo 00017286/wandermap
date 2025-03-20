@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, send_from_directory, url_for
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask import make_response  # create custom HTTP responses
 from flask import send_file  # send files as responses
 from flask_sqlalchemy import SQLAlchemy  # working with db
@@ -32,10 +32,6 @@ stripe.api_key = "sk_test_51R4ftwHy59XGfrcneVpHJ3pk6uHm0nky74BPOrAHxhJBUoujIJfXl
 PRICE_ID = "price_1R4jA9Hy59XGfrcn0HX0vZFf"  
 
 app = Flask(__name__)  # Create instance of Flask application
-@app.route('/static/<path:filename>')
-def static_files(filename):
-    return send_from_directory(os.path.join(app.root_path, 'static'), filename)
-
 # Swagger initialization
 swagger = Swagger(app)
 
@@ -45,14 +41,6 @@ CORS(app, resources={r"/admin-sign-in": {"origins": "*"}})
 # Database connection settings
 app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable SQLAlchemy modification tracking for performance improvement
-
-conn_str = "DRIVER=ODBC Driver 17 for SQL Server;SERVER=DESKTOP-RC369C7\\SQLEXPRESS01;DATABASE=WanderMap_DB;Trusted_Connection=yes"
-try:
-    conn = pyodbc.connect(conn_str)
-    print("✅ Успешное подключение к базе!")
-    conn.close()
-except pyodbc.Error as e:
-    print("❌ Ошибка подключения:", e)
 
 # Initialize database object for interacting with db
 db = SQLAlchemy(app)
