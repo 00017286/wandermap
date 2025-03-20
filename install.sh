@@ -1,12 +1,12 @@
-# Базовый образ
+# Используем официальный образ Debian 11 (Bullseye) с Python 3.9
 FROM python:3.9
 
 # Устанавливаем нужные утилиты
 RUN apt-get update && apt-get install -y curl gnupg2 apt-transport-https software-properties-common
 
-# Добавляем ключ Microsoft и репозиторий для Debian 11 (bullseye)
+# Добавляем репозиторий Microsoft для Debian 11 (Bullseye)
 RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    add-apt-repository "$(curl -fsSL https://packages.microsoft.com/config/debian/11/prod.list)" && \
+    curl -fsSL https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
     apt-get update
 
 # Устанавливаем ODBC-драйвер и зависимости
