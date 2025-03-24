@@ -41,7 +41,7 @@ CORS(app, resources={r"/admin-sign-in": {"origins": "*"}})
 # Database connection settings
 # app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    'mssql+pyodbc://admin:345ertERT!!!@database-1.cavoeg0u27ey.us-east-1.rds.amazonaws.com:1433/database-1?driver=ODBC+Driver+17+for+SQL+Server'
+    'mssql+pyodbc://admin:345ertERT!!!@database-1.cavoeg0u27ey.us-east-1.rds.amazonaws.com:1433/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server'
 )
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable SQLAlchemy modification tracking for performance improvement
 
