@@ -46,19 +46,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 )
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable SQLAlchemy modification tracking for performance improvement
 
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-    'pool_size': 10,
-    'max_overflow': 20,
-    'pool_timeout': 30,
-    'pool_recycle': 1800
-}
-
 # Initialize database object for interacting with db
-try:
-    db = SQLAlchemy(app)
-except Exception as e:
-    print(f"Error connecting to the database: {str(e)}")
-
+db = SQLAlchemy(app)
 
 # Email sending configuration
 SMTP_SERVER = "smtp.gmail.com"  # SMTP server address
@@ -2744,4 +2733,4 @@ def check_subscription():
 if __name__ == "__main__":
     with app.app_context():  # Creates application context
         db.create_all()  # Initializes database tables if they do not exist
-    app.run(debug=True, host='0.0.0.0', port=8000)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 10000)))
