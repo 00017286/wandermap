@@ -36,7 +36,8 @@ app = Flask(__name__)  # Create instance of Flask application
 swagger = Swagger(app)
 
 # Enable Cross-Origin Resource Sharing (CORS), allowing requests from any origin
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
 
 # Database connection settings
 # app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
