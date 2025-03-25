@@ -25,4 +25,4 @@ WORKDIR /app
 EXPOSE 10000
 
 # Запуск приложения через Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--timeout", "120", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--timeout", "240", "app:app"]
