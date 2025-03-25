@@ -2800,7 +2800,7 @@ def unsubscribe():
 def stripe_webhook():
     payload = request.get_data(as_text=True)
     sig_header = request.headers.get("Stripe-Signature")
-    endpoint_secret = "your_webhook_secret"  # Из настроек Stripe
+    endpoint_secret = "whsec_PhpMBvwz3RihXALeCtX9wwMFN2VETwcn"  # Из настроек Stripe
 
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
