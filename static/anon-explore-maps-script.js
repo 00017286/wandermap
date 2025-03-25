@@ -170,10 +170,10 @@ function fetchMaps(username) {
 
 // Загрузка карт после полной загрузки страницы
 window.onload = () => {
-    const username = getUsernameFromCookie();
+    let username = getUsernameFromCookie();  // Используем let, чтобы присвоить значение в дальнейшем
 
     if (!username) {
-        username = 'unauthorized';
+        username = 'unauthorized';  // Теперь это не вызывает ошибку
     }
 
     fetchMaps(username).then(() => searchMaps()); // Применяем фильтр после загрузки карт
