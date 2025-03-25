@@ -7,7 +7,6 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip
-RUN pip install pyodbc
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
@@ -15,6 +14,8 @@ RUN pip install -r requirements.txt
 COPY . /app
 WORKDIR /app
 
+# Открытие порта
 EXPOSE 10000
 
-# CMD ["gunicorn", "-b", "0.0.0.0:10000", "app:app"]
+# Запуск приложения через Gunicorn
+# CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
