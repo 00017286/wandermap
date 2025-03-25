@@ -3,4 +3,4 @@ services:
     name: my-app
     docker:
       buildCommand: docker build -t my-app .
-      startCommand: docker run -p 5000:5000 my-app
+      startCommand: gunicorn -w 3 app:app
