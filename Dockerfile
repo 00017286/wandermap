@@ -1,10 +1,9 @@
 FROM python:3.9-slim
 
-# Установка зависимостей для ODBC драйвера и компилятора
+# Установка зависимостей для pymssql
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    unixodbc-dev \
-    msodbcsql17 \
+    freetds-dev \
     g++ \
     python3-dev \
     build-essential \
@@ -15,7 +14,7 @@ RUN apt-get update \
 RUN pip install --upgrade pip
 
 # Установка зависимостей из requirements.txt
-COPY requirements.txt . 
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Копирование всех файлов в контейнер
@@ -26,4 +25,4 @@ WORKDIR /app
 EXPOSE 10000
 
 # Запуск приложения через Gunicorn
-# CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
