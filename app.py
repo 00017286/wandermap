@@ -91,6 +91,8 @@ class Traveller(db.Model):
     sportLover = db.Column(db.Boolean, default=False)
     blocked = db.Column(db.Boolean, default=False)
     subscription = db.Column(db.Boolean, default=False)
+    stripe_customer_id = db.Column(db.String(255))
+    subscription_id = db.Column(db.String(255))
 
     # Relationships with other tables
     reviews = db.relationship('Review', backref='traveller', lazy=True)
@@ -2730,6 +2732,70 @@ def check_subscription():
 
     traveller = Traveller.query.filter_by(userName=username).first()
     return jsonify({"subscription": traveller.subscription if traveller else False})
+
+@app.route("/create-checkout-session", methods=["POST"])
+def create_checkout_session():
+    """
+    Создает сессию оплаты в Stripe для подписки пользователя.
+    """
+
+    data = request.get_json()
+    username = data.get('username')
+    if not username:
+        return jsonify({"error": "Missing username parameter"}), 400
+
+    traveller = Traveller.query.filter_by(userName=username).first()
+
+    # Проверяем, есть ли у пользователя зарегистрированный Stripe Customer ID
+    if not traveller.stripe_customer_id:
+        # Если нет, создаем нового клиента в Stripe
+        customer = stripe.Customer.create(
+            email=traveller.email,  # Привязываем email пользователя
+            name=f"{traveller.name} {traveller.surname}",  # Передаем его имя и фамилию
+        )
+        traveller.stripe_customer_id = customer.id  # Сохраняем идентификатор клиента в БД
+        db.session.commit()  # Фиксируем изменения
+    else:
+        # Если ID уже есть, загружаем клиента из Stripe
+        customer = stripe.Customer.retrieve(traveller.stripe_customer_id)
+
+    try:
+        # Создаем checkout-сессию в Stripe для оформления подписки
+        checkout_session = stripe.checkout.Session.create(
+            customer=customer.id,  # Привязываем сессию к пользователю
+            payment_method_types=["card"],  # Разрешаем оплату картой
+            line_items=[{"price": PRICE_ID, "quantity": 1}],  # Подключаем план подписки
+            mode="subscription",  # Указываем, что это подписка
+            success_url="https://wandermap-1i48.onrender.com/home",  # URL при успешной оплате
+            cancel_url="https://wandermap-1i48.onrender.com/home",  # URL при отмене
+            
+            #success_url="http://localhost:10000/home",  # URL при успешной оплате
+            #cancel_url="http://localhost:10000/home",  # URL при отмене
+        )
+        return jsonify({"url": checkout_session.url})  # Отправляем клиенту ссылку на оплату
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/unsubscribe", methods=["POST"])
+def unsubscribe():
+    data = request.get_json()
+    username = data.get('username')
+    if not username:
+        return jsonify({"error": "Missing username parameter"}), 400
+
+    traveller = Traveller.query.filter_by(userName=username).first()
+    if not traveller:
+        return jsonify({"error": "User not found"}), 404
+
+    if not traveller.subscription:
+        return jsonify({"message": "User is already unsubscribed"}), 200
+
+    traveller.subscription = False
+    traveller.subscription_id = None
+    db.session.commit()
+
+    return jsonify({"message": "You're now unsubscribed from WanderMap"}), 200
+
 
 if __name__ == "__main__":
     with app.app_context():  # Creates application context

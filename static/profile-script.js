@@ -152,12 +152,18 @@ window.onload = () => {
     // Subscribe
     const subscribeBtn = document.getElementById("subscribe");
     subscribeBtn.addEventListener("click", async () => {
-        window.location.href = `/${encodeURIComponent(getUsernameFromCookie())}/my_profile?scrollToSubscription=true`;
+        window.location.href = `/${encodeURIComponent(username)}/my_profile?scrollToSubscription=true`;
         return;
     });
 
     document.getElementById("subscribe-button").addEventListener("click", function () {
-    fetch("/create-checkout-session", { method: "POST" })
+        fetch("/create-checkout-session", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username: username })
+         })
         .then(response => response.json())
         .then(session => {
             window.location.href = session.url; // Перенаправляем пользователя на Stripe Checkout
@@ -166,11 +172,17 @@ window.onload = () => {
     });
 
     document.getElementById("unsubscribe-button").addEventListener("click", function () {
-        fetch("/unsubscribe", { method: "POST" })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch(error => console.error("Error:", error));
+        fetch("/unsubscribe", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({username: username})
+         })
+        .then(response => response.json())
+        .then(data => {
+            showAlert(data.message);
+        })
+        .catch(error => console.error("Error:", error));
     });
 };
