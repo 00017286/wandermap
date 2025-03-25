@@ -31,7 +31,8 @@ stripe.api_key = "sk_test_51R4ftwHy59XGfrcneVpHJ3pk6uHm0nky74BPOrAHxhJBUoujIJfXl
 # ✅ Указываем ID подписки
 PRICE_ID = "price_1R4jA9Hy59XGfrcn0HX0vZFf"  
 
-app = Flask(__name__)  # Create instance of Flask application
+#app = Flask(__name__)  # Create instance of Flask application
+app = Flask(__name__, static_folder='static')
 # Swagger initialization
 swagger = Swagger(app)
 
