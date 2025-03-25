@@ -9,7 +9,7 @@ from flasgger import Swagger
 
 from itertools import permutations  # generate all possible orderings of a sequence
 from datetime import datetime, date  # work with date and time
-import pyodbc  # connecting to Microsoft SQL Server
+import pymssql  # connecting to Microsoft SQL Server
 import json  # handle JSON data
 import os  # interact with the operating system
 import faiss  # Facebook AI Similarity Search for fast nearest neighbor retrieval
