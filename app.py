@@ -36,8 +36,7 @@ app = Flask(__name__)  # Create instance of Flask application
 swagger = Swagger(app)
 
 # Enable Cross-Origin Resource Sharing (CORS), allowing requests from any origin
-#CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
-CORS(app, resources={r"/admin-sign-in": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 
 # Database connection settings
