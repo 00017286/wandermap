@@ -97,14 +97,14 @@
         <div class="subscription-info">
             <h1>WanderMap monthly subscription</h1>
 
-            {% if traveller.subscription %}
+            {% if traveller.subscription is true %}
                 <h3>Premium functions you get:</h3>
                 <ul>
                     <li>You're currently subscribed to WanderMap!</li>
                     <li>Your subscription prolongs every month automatically!</li>
                     <li>If you unsubscribe, the subscription will remain for the current month!</li>
                     <p> </p>
-                    <strong>Unlock all premium features for just $2 per month!</strong>
+                    <strong>All premium features are unlocked for you!</strong>
                 </ul>
                 <p> </p>
                 <button id="unsubscribe-button" type="button">Unsubscribe on WanderMap</button>
