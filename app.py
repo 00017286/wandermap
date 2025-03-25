@@ -2796,6 +2796,33 @@ def unsubscribe():
 
     return jsonify({"message": "You're now unsubscribed from WanderMap"}), 200
 
+@app.route("/webhook", methods=["POST"])
+def stripe_webhook():
+    payload = request.get_data(as_text=True)
+    sig_header = request.headers.get("Stripe-Signature")
+    endpoint_secret = "your_webhook_secret"  # Из настроек Stripe
+
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
+    except ValueError as e:
+        return jsonify({"error": "Invalid payload"}), 400
+    except stripe.error.SignatureVerificationError as e:
+        return jsonify({"error": "Invalid signature"}), 400
+
+    # Проверяем, что платеж прошел
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+        customer_id = session["customer"]
+        subscription_id = session["subscription"]
+
+        # Находим пользователя в БД
+        traveller = Traveller.query.filter_by(stripe_customer_id=customer_id).first()
+        if traveller:
+            traveller.subscription = True  # Обновляем подписку
+            traveller.subscription_id = subscription_id  # Сохраняем ID подписки
+            db.session.commit()
+
+    return jsonify({"status": "success"}), 200
 
 if __name__ == "__main__":
     with app.app_context():  # Creates application context
