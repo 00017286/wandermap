@@ -171,18 +171,34 @@ window.onload = () => {
         .catch(error => console.error("Error:", error));
     });
 
-    document.getElementById("unsubscribe-button").addEventListener("click", function () {
+    document.addEventListener("DOMContentLoaded", () => {
+    const unsubscribeBtn = document.getElementById("unsubscribe-button");
+
+    if (!unsubscribeBtn) {
+        console.error("Unsubscribe button not found!");
+        return;
+    }
+
+    console.log("Unsubscribe button found!");
+
+    unsubscribeBtn.addEventListener("click", () => {
+        console.log("Unsubscribe button clicked!"); // Проверяем, сработал ли клик
+
+        const username = getUsernameFromCookie();
+        console.log("Username:", username);
+
         fetch("/unsubscribe", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({username: username})
-         })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: username }),
+        })
         .then(response => response.json())
         .then(data => {
-            showAlert(data.message);
+            console.log("Response:", data);
+            alert(data.message);
         })
         .catch(error => console.error("Error:", error));
     });
+});
+
 };

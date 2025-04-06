@@ -446,6 +446,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         ).join("");
     }
 
+    if (elements.waypointSelect) {
+        elements.waypointSelect.addEventListener("change", async () => {
+            const waypointId = elements.waypointSelect.value;
+            const mapId = document.getElementById("viewMapPopup").getAttribute("data-map-id");
+            
+            try {
+                const response = await fetch(`/get-waypoint?waypointId=${encodeURIComponent(waypointId)}&mapId=${encodeURIComponent(mapId)}`);
+                const waypoint = await response.json();
+                if (waypoint) loadWaypointData(waypoint);
+            } catch (error) {
+                console.error("Ошибка загрузки точки маршрута:", error);
+            }
+        });
+    }
+
     // Handler for opening the pop-up when clicking the button
     document.getElementById("mapList").addEventListener("click", async (event) => {
         if (event.target.classList.contains("view-map")) { // Check if the click was on the "View Map" button

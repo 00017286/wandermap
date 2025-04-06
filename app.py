@@ -26,9 +26,9 @@ from selenium.webdriver.chrome.service import Service  # manage ChromeDriver ser
 from webdriver_manager.chrome import ChromeDriverManager  # automatic ChromeDriver management
 
 import stripe
-# ✅ Устанавливаем ключи Stripe
+# Stripe key
 stripe.api_key = "sk_test_51R4ftwHy59XGfrcneVpHJ3pk6uHm0nky74BPOrAHxhJBUoujIJfXlX8yOb0EYsoBHzbI7e5feb2f1tvNhGm8eBq300D1gGaAPH"
-# ✅ Указываем ID подписки
+# Subscription id
 PRICE_ID = "price_1R4jA9Hy59XGfrcn0HX0vZFf"  
 
 #app = Flask(__name__)  # Create instance of Flask application
@@ -41,10 +41,10 @@ CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 
 # Database connection settings
-# app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    'mssql+pymssql://admin:345ertERT!!!@database-1.cavoeg0u27ey.us-east-1.rds.amazonaws.com:1433/WanderMap_DB'
-)
+app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
+# app.config['SQLALCHEMY_DATABASE_URI'] = (
+#    'mssql+pymssql://admin:345ertERT!!!@database-1.cavoeg0u27ey.us-east-1.rds.amazonaws.com:1433/WanderMap_DB'
+#)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable SQLAlchemy modification tracking for performance improvement
 
 # Initialize database object for interacting with db
@@ -165,6 +165,11 @@ def home():
     responses:
       200:
         description: Render the home page
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>Home Page</html>"
     """
     return render_template('home.html')
 
@@ -178,6 +183,11 @@ def explore_maps():
     responses:
       200:
         description: Render the explore maps page
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>Explore Maps Page</html>"
     """
     return render_template('explore_maps.html')
 
@@ -191,6 +201,11 @@ def how_to_use():
     responses:
       200:
         description: Render the how-to-use page
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>How to Use Page</html>"
     """
     return render_template('how_to_use.html')
 
@@ -204,6 +219,11 @@ def about_us():
     responses:
       200:
         description: Render the about us page
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>About Us Page</html>"
     """
     return render_template('about_us.html')
 
@@ -217,6 +237,11 @@ def admin_home():
     responses:
       200:
         description: Render the admin home page
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>Admin Home Page</html>"
     """
     return render_template('admin_home.html')
 
@@ -231,11 +256,17 @@ def user_home(username):
       - name: username
         in: path
         required: true
-        type: string
-        example: "john_doe"
+        schema:
+          type: string
+          example: "john_doe"
     responses:
       200:
         description: Render the user's home page
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>User Home Page</html>"
     """
     return render_template('user_home.html', username=username)
 
@@ -250,11 +281,17 @@ def my_maps(username):
       - name: username
         in: path
         required: true
-        type: string
-        example: "john_doe"
+        schema:
+          type: string
+          example: "john_doe"
     responses:
       200:
         description: Render the my maps page for the user
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>My Maps Page</html>"
     """
     return render_template('my_maps.html', username=username)
 
@@ -269,13 +306,24 @@ def my_profile(username):
       - name: username
         in: path
         required: true
-        type: string
-        example: "john_doe"
+        schema:
+          type: string
+          example: "john_doe"
     responses:
       200:
         description: Render the user profile page
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>User Profile Page</html>"
       404:
         description: User not found
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>User not found</html>"
     """
     traveller = Traveller.query.filter_by(userName=username).first()
     if not traveller:
@@ -294,11 +342,17 @@ def user_explore_maps(username):
       - name: username
         in: path
         required: true
-        type: string
-        example: "john_doe"
+        schema:
+          type: string
+          example: "john_doe"
     responses:
       200:
         description: Render the explore maps page for the user
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>User Explore Maps Page</html>"
     """
     return render_template('user_explore_maps.html', username=username)
 
@@ -313,11 +367,17 @@ def user_how_to_use(username):
       - name: username
         in: path
         required: true
-        type: string
-        example: "john_doe"
+        schema:
+          type: string
+          example: "john_doe"
     responses:
       200:
         description: Render the how-to-use page for the user
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>User How to Use Page</html>"
     """
     return render_template('user_how_to_use.html', username=username)
 
@@ -332,11 +392,17 @@ def user_about_us(username):
       - name: username
         in: path
         required: true
-        type: string
-        example: "john_doe"
+        schema:
+          type: string
+          example: "john_doe"
     responses:
       200:
         description: Render the about us page for the user
+        content:
+          text/html:
+            schema:
+              type: string
+              example: "<html>User About Us Page</html>"
     """
     return render_template('user_about_us.html', username=username)
 
@@ -377,8 +443,24 @@ def admin_sign_in():
                   example: "admin123"
       400:
         description: Missing parameters
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Missing parameters"
       500:
         description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred"
     """
     try:
         data = request.get_json()  # Get request data in JSON format
@@ -440,8 +522,24 @@ def user_sign_in():
                   example: false
       400:
         description: Parameters not provided
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Parameters not provided"
       500:
         description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred"
     """
     try:
         data = request.get_json()
@@ -454,11 +552,11 @@ def user_sign_in():
         traveller = Traveller.query.filter_by(userName=userName).first()
         
         # If user is blocked, return a blocked response
-        if traveller.blocked == True:
+        if traveller and traveller.blocked:
             return jsonify({'userBlocked': True})
         
         # Check if the user exists and the password is correct
-        elif traveller and bcrypt.checkpw(password.encode("utf-8"), traveller.password.encode("utf-8")):
+        if traveller and bcrypt.checkpw(password.encode("utf-8"), traveller.password.encode("utf-8")):
             resp = make_response(jsonify({'userExists': True, 'username': userName}))
             resp.set_cookie('username', userName)  # Store the username in a cookie
             return resp
@@ -479,6 +577,14 @@ def logout():
     responses:
       302:
         description: Redirects to home and clears user session
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Redirecting to home page"
     """
     resp = make_response(redirect(url_for('home')))  # Redirect to the home page
     resp.set_cookie('username', '', expires=0)  # Clear the username cookie
@@ -508,10 +614,37 @@ def user_sign_up():
     responses:
       200:
         description: User successfully registered
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userExists:
+                  type: boolean
+                  example: false
+                username:
+                  type: string
+                  example: "new_user"
       400:
         description: Missing username or password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Missing username or password"
       500:
         description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred"
     """
     try:
         data = request.get_json()
@@ -519,9 +652,9 @@ def user_sign_up():
         password = data.get('password')
 
         if not userName:
-            return jsonify({'noUsername': True})
+            return jsonify({'error': 'Missing username'}), 400
         if not password:
-            return jsonify({'noPassword': True})
+            return jsonify({'error': 'Missing password'}), 400
 
         # Check if the user already exists
         if Traveller.query.filter_by(userName=userName).first():
@@ -564,18 +697,56 @@ def recover_email():
     responses:
       200:
         description: Recovery email sent successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sentEmail:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Recovery email sent."
       400:
         description: Username is required
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Username is required"
       404:
         description: User not found or no email associated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userExists:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "No user with such username."
       500:
         description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred"
     """
     data = request.get_json()
     username = data.get('username')
 
     if not username:
-        return jsonify({"userExists": False, "message": "Username is required"}), 400
+        return jsonify({"error": "Username is required"}), 400
 
     traveller = Traveller.query.filter_by(userName=username).first()
 
@@ -587,7 +758,7 @@ def recover_email():
 
     # Send recovery email
     if send_recover_email(traveller.email):
-        return jsonify({"sentEmail": True, "message": "Recovering email sent."})
+        return jsonify({"sentEmail": True, "message": "Recovery email sent."})
     else:
         return jsonify({"sentEmail": False, "message": "Failed to send email."})
 
@@ -678,10 +849,44 @@ def update_profile():
     responses:
       200:
         description: Profile updated successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Profile updated successfully"
+      400:
+        description: Missing required fields in the request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Missing required fields"
       404:
         description: User not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "User not found"
       500:
         description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred while updating the profile"
     """
     data = request.get_json()  # Extract JSON data from the request
 
@@ -777,9 +982,10 @@ def get_or_create_draftmap():
               username:
                 type: string
                 description: Username of the user
+                example: "traveller01"
     responses:
       200:
-        description: Draft map retrieved successfully
+        description: Draft map retrieved successfully or a new one created
         content:
           application/json:
             schema:
@@ -787,23 +993,52 @@ def get_or_create_draftmap():
               properties:
                 id:
                   type: integer
+                  description: ID of the draft map
+                  example: 1
                 username:
                   type: string
+                  description: Username associated with the draft map
+                  example: "traveller01"
                 waypoints:
                   type: array
+                  description: List of waypoints in the draft map
                   items:
                     type: object
                     properties:
                       id:
                         type: integer
+                        description: ID of the waypoint
                       name:
                         type: string
+                        description: Name of the waypoint
                       latitude:
                         type: number
+                        format: float
+                        description: Latitude of the waypoint
                       longitude:
                         type: number
+                        format: float
+                        description: Longitude of the waypoint
       400:
         description: Missing username
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Username is required"
+      500:
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred while retrieving or creating the draft map"
     """
     data = request.get_json()
 
@@ -857,12 +1092,22 @@ def add_waypoint():
             properties:
               username:
                 type: string
+                description: Username of the user
+                example: "traveller01"
               name:
                 type: string
+                description: Name of the waypoint
+                example: "Mountain Peak"
               latitude:
                 type: number
+                format: float
+                description: Latitude of the waypoint
+                example: 34.0522
               longitude:
                 type: number
+                format: float
+                description: Longitude of the waypoint
+                example: -118.2437
     responses:
       200:
         description: Waypoint successfully added or already exists
@@ -873,12 +1118,42 @@ def add_waypoint():
               properties:
                 newWaypoint:
                   type: boolean
+                  description: Whether a new waypoint was added
+                  example: true
                 message:
                   type: string
+                  description: Message about the addition status
+                  example: "Waypoint successfully added"
       400:
         description: Missing required fields
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "All fields are required"
       404:
         description: Draft map not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "DraftMap not found"
+      500:
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred while adding the waypoint"
     """
     data = request.get_json()
     username = data.get('username')
@@ -978,21 +1253,58 @@ def delete_draft_map():
     ---
     tags:
       - Waypoints
-    parameters:
-      - name: username
-        in: body
-        type: string
-        required: true
-        description: Username of the traveller.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                description: Username of the traveller
+                example: "traveller01"
     responses:
       200:
-        description: Successfully deleted the draft map.
+        description: Successfully deleted all waypoints from the user's draft map
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "All waypoints successfully deleted from your draft map."
       400:
-        description: Username is missing.
+        description: Missing username in the request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Username is required"
       404:
-        description: User or draft map not found.
+        description: User or draft map not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "User or draft map not found"
       500:
-        description: Internal server error.
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred while deleting waypoints from the draft map"
     """
     try:
         data = request.get_json()
@@ -1082,11 +1394,75 @@ def get_recommendations():
         description: Username of the traveller.
     responses:
       200:
-        description: List of recommended waypoints.
+        description: List of recommended waypoints based on the user's profile and draft map.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hasWaypoints:
+                  type: boolean
+                  description: Indicates whether the user has waypoints in their draft map.
+                recommendedWaypoints:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the recommended waypoint.
+                      name:
+                        type: string
+                        description: The name of the recommended waypoint.
+                      latitude:
+                        type: number
+                        format: float
+                        description: The latitude of the recommended waypoint.
+                      longitude:
+                        type: number
+                        format: float
+                        description: The longitude of the recommended waypoint.
+                      score:
+                        type: number
+                        format: float
+                        description: The recommendation score for the waypoint.
+                      distance:
+                        type: number
+                        format: float
+                        description: The distance from the draft map's waypoints.
+                      draftWaypointName:
+                        type: string
+                        description: The name of the closest waypoint from the draft map.
       400:
-        description: Username is missing.
+        description: Username is missing in the query parameters.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Username is required"
+      404:
+        description: User or draft map not found.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "User or draft map not found"
       500:
         description: Internal server error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred while retrieving recommendations"
     """
     username = request.args.get('username')
     if not username:
@@ -1152,16 +1528,16 @@ def get_recommendations():
             for idx in traveller_indices if idx != -1 and Traveller.query.get(idx) is not None
         }
 
-        # Поиск по похожим пользователям
+        # Search based on similar travellers
         _, waypoint_indices_t = waypoints_index.search(traveller_vector, 30)
-        results += [(idx, 0.5) for idx in waypoint_indices_t[0] if idx != -1]  # Вес 0.5
+        results += [(idx, 0.5) for idx in waypoint_indices_t[0] if idx != -1]  # Weight 0.5
 
     if draftmap_waypoints_vector is not None:
-        # Поиск похожих точек по черновым
+        # Search for similar waypoints based on draft map
         _, waypoint_indices_d = waypoints_index.search(draftmap_waypoints_vector, 30)
-        results += [(idx, 0.5) for idx in waypoint_indices_d[0] if idx != -1]  # Вес 0.5
+        results += [(idx, 0.5) for idx in waypoint_indices_d[0] if idx != -1]  # Weight 0.5
 
-    # Объединение и сортировка результатов
+    # Combine and sort the results
     waypoint_scores = {}
     for idx, weight in results:
         if idx in waypoint_scores:
@@ -1170,17 +1546,17 @@ def get_recommendations():
             waypoint_scores[idx] = weight
 
     print(waypoint_scores)
-    # Сортируем все точки по убыванию веса и берем все результаты
+    # Sort all waypoints by descending weight and take all results
     sorted_waypoints = sorted(waypoint_scores.items(), key=lambda x: -x[1])
 
-    # Формируем рекомендации
+    # Generate recommendations
     recommended = []
     for wp_index, score in sorted_waypoints:
         waypoint = Waypoint.query.get(int(wp_index))
-        # Проверяем, если точка не находится в черновой карте, добавляем ее
+        # Check if the waypoint is not already in the draft map, then add it
         if waypoint and waypoint.id not in draft_waypoint_ids:
             
-            # Найти ближайшую точку из черновой карты
+            # Find the nearest point from the draft map
             nearest_draft_wp = min(
                 draft_waypoints, 
                 key=lambda dwp: haversine_distance(dwp, waypoint),
@@ -1199,7 +1575,7 @@ def get_recommendations():
                 'draftWaypointName': draft_wp_name
             })
 
-    # Ограничиваем список до 5 точек
+    # Limit the list to 5 waypoints
     recommended = recommended[:5]
 
     return jsonify({'hasWaypoints': True, 'recommendedWaypoints': recommended})
@@ -1212,26 +1588,54 @@ def add_chosen_waypoints():
     ---
     tags:
       - Waypoints
-    parameters:
-      - name: username
-        in: body
-        type: string
-        required: true
-        description: Username of the traveller.
-      - name: waypoints
-        in: body
-        type: array
-        items:
-          type: integer
-        required: true
-        description: List of waypoint IDs to add.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                description: Username of the traveller
+                example: "traveller01"
+              waypoints:
+                type: array
+                items:
+                  type: integer
+                description: List of waypoint IDs to add to the draft map
+                example: [1, 2, 3]
     responses:
       200:
-        description: Waypoints successfully added.
+        description: Successfully added the waypoints to the user's draft map
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Waypoints successfully added to your map."
       404:
-        description: Draft map not found or no valid waypoints found.
+        description: Draft map not found for the user or no valid waypoints found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Draft map not found for the user"
       500:
-        description: Internal server error.
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "An error occurred while adding waypoints to the draft map"
     """
     # Retrieve data from request payload
     data = request.get_json()
@@ -1316,31 +1720,62 @@ def get_waypoints():
         required: true
         schema:
           type: string
+        description: Username of the traveller
+        example: "traveller01"
     responses:
       200:
         description: List of waypoints with optimized order
-        schema:
-          type: object
-          properties:
-            waypoints:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  order:
-                    type: integer
-                  description:
-                    type: string
-                  images:
-                    type: array
-                    items:
-                      type: string
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                waypoints:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      order:
+                        type: integer
+                      description:
+                        type: string
+                      images:
+                        type: array
+                        items:
+                          type: string
+        example: 
+          {
+            "waypoints": [
+              {
+                "id": 1,
+                "name": "Waypoint 1",
+                "order": 1,
+                "description": "Description of waypoint 1",
+                "images": ["image1.jpg", "image2.jpg"]
+              },
+              {
+                "id": 2,
+                "name": "Waypoint 2",
+                "order": 2,
+                "description": "Description of waypoint 2",
+                "images": ["image3.jpg"]
+              }
+            ]
+          }
       404:
-        description: No draft map found
+        description: No draft map found for the user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "No draft map found for the user"
     """
     username = request.args.get('username')
 
@@ -1380,34 +1815,52 @@ def set_waypoints_order():
       - Waypoints
     summary: Set waypoints order
     description: Allows users to manually set the order of waypoints in their draft map.
-    parameters:
-      - name: username
-        in: body
-        required: true
-        schema:
-          type: string
-      - name: waypoints
-        in: body
-        required: true
-        schema:
-          type: array
-          items:
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
             type: object
             properties:
-              id:
-                type: integer
-              setWaypointOrder:
-                type: integer
+              username:
+                type: string
+                description: Username of the traveller
+                example: "traveller01"
+              waypoints:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    setWaypointOrder:
+                      type: integer
+                description: List of waypoints with their new order
+                example: [
+                  {"id": 1, "setWaypointOrder": 1},
+                  {"id": 2, "setWaypointOrder": 2}
+                ]
     responses:
       200:
         description: Waypoints order updated successfully
-        schema:
-          type: object
-          properties:
-            message:
-              type: string
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Waypoints order updated successfully"
       404:
         description: Draft map not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "Draft map not found"
     """
     data = request.get_json()
     username = data.get('username')
@@ -1446,33 +1899,67 @@ def get_draft_map():
         required: true
         schema:
           type: string
+        description: Username of the traveller
+        example: "traveller01"
     responses:
       200:
-        description: Draft map details
-        schema:
-          type: object
-          properties:
-            description:
-              type: string
-            waypoints:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  order:
-                    type: integer
-                  description:
-                    type: string
-                  images:
-                    type: array
-                    items:
-                      type: string
+        description: Draft map details, including waypoints
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: Description of the draft map
+                  example: "This is a draft map for the traveller."
+                waypoints:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      order:
+                        type: integer
+                      description:
+                        type: string
+                      images:
+                        type: array
+                        items:
+                          type: string
+        example: 
+          {
+            "description": "This is a draft map for the traveller.",
+            "waypoints": [
+              {
+                "id": 1,
+                "name": "Waypoint 1",
+                "order": 1,
+                "description": "Description of waypoint 1",
+                "images": ["image1.jpg", "image2.jpg"]
+              },
+              {
+                "id": 2,
+                "name": "Waypoint 2",
+                "order": 2,
+                "description": "Description of waypoint 2",
+                "images": ["image3.jpg"]
+              }
+            ]
+          }
       404:
         description: No draft map found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "No draft map found for the user"
     """
     username = request.args.get('username')
     draft_map = DraftMap.query.filter(DraftMap.userName == username).first()
@@ -1502,7 +1989,7 @@ def save_waypoint():
     tags:
       - Draft Waypoints
     summary: Update draft waypoint
-    description: Updates the description of a waypoint in a user's draft map.
+    description: Updates the description of a waypoint and map in a user's draft map.
     parameters:
       - name: username
         in: body
@@ -1526,9 +2013,13 @@ def save_waypoint():
           type: string
     responses:
       200:
-        description: Waypoint updated successfully
+        description: Waypoint and/or map description updated successfully
+        schema:
+          type: object
       404:
         description: Draft map or waypoint not found
+        schema:
+          type: object
     """
     data = request.json
     username = data.get("username")
@@ -1559,7 +2050,7 @@ def upload_waypoint_image():
     tags:
       - Draft Waypoints
     summary: Upload waypoint images
-    description: Uploads one or more images to a draft waypoint.
+    description: Uploads one or more images to a draft waypoint and associates them with the waypoint.
     parameters:
       - name: username
         in: formData
@@ -1575,11 +2066,16 @@ def upload_waypoint_image():
         in: formData
         required: true
         type: file
+        description: List of image files to upload
     responses:
       200:
-        description: Images uploaded successfully
+        description: Images uploaded and associated with the waypoint successfully
+        schema:
+          type: object
       404:
         description: Waypoint not found
+        schema:
+          type: object
     """
     username = request.form.get("username")
     waypoint_id = request.form.get("waypointId")
@@ -1610,7 +2106,7 @@ def remove_waypoint_image():
     tags:
       - Draft Waypoints
     summary: Remove waypoint image
-    description: Removes a specified image from a draft waypoint.
+    description: Removes a specified image from a draft waypoint and deletes the image if no other waypoints use it.
     parameters:
       - name: username
         in: body
@@ -1629,9 +2125,13 @@ def remove_waypoint_image():
           type: string
     responses:
       200:
-        description: Image removed successfully
+        description: Image removed and deleted if not referenced elsewhere
+        schema:
+          type: object
       404:
         description: Waypoint or image not found
+        schema:
+          type: object
     """
     data = request.json
     username = data.get("username")
@@ -1684,8 +2184,18 @@ def save_map():
     responses:
       200:
         description: Map saved successfully
+        schema:
+          type: object
+          properties:
+            hasWaypoints:
+              type: boolean
       404:
         description: No draft map or waypoints found
+        schema:
+          type: object
+          properties:
+            hasWaypoints:
+              type: boolean
     """
     data = request.json  
     username = data.get('username')
@@ -1779,6 +2289,11 @@ def get_maps():
               description: User's subscription status
       400:
         description: Missing username parameter
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
     """
     username = request.args.get("username")
     if not username:
@@ -1789,7 +2304,7 @@ def get_maps():
 
     # Get the user's subscription status
     traveller = Traveller.query.filter_by(userName=username).first()
-    subscription = traveller.subscription if traveller else False  # Если юзер не найден, считаем, что подписки нет
+    subscription = traveller.subscription if traveller else False  # If the user is not found, we assume that there is no subscription
 
     map_list = []
     for map in maps:
@@ -1820,7 +2335,7 @@ def get_all_maps():
     tags:
       - Manage Maps
     summary: Get all maps
-    description: Returns all maps in the database, including waypoints and their associated images.
+    description: Returns all maps in the database, including waypoints and their associated images. If the user is not subscribed, the number of maps is limited to 3.
     parameters:
       - name: username
         in: query
@@ -1830,45 +2345,57 @@ def get_all_maps():
     responses:
       200:
         description: List of all maps with details
-        schema:
-          type: object
-          properties:
-            maps:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  description:
-                    type: string
-                  rating:
-                    type: number
-                  reviewsNumber:
-                    type: integer
-                  waypoints:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        images:
-                          type: array
-                          items:
-                            type: string
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                maps:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      description:
+                        type: string
+                      rating:
+                        type: number
+                      reviewsNumber:
+                        type: integer
+                      waypoints:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            images:
+                              type: array
+                              items:
+                                type: string
+                subscription:
+                  type: boolean
+                  description: User's subscription status
       400:
         description: Missing username parameter
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
     """
     username = request.args.get("username")
     if not username:
         return jsonify({"error": "Missing username"}), 400
     
     traveller = Traveller.query.filter_by(userName=username).first()
-    subscription = traveller.subscription if traveller else False  # Подписка юзера
+    subscription = traveller.subscription if traveller else False  # User subsctription
 
-    # Получаем все карты
+    # Get all the maps
     maps = Map.query.all()
 
-    # Если подписки нет, ограничиваем количество карт до 3
+    # If there is no subscription, limit the number of maps to 3
     if not subscription:
         maps = maps[:3]
 
@@ -1916,45 +2443,52 @@ def get_map():
         schema:
           type: string
     responses:
-    200:
+      200:
         description: Map details including waypoints and user rating
         content:
-        application/json:
+          application/json:
             schema:
-            type: object
-            properties:
+              type: object
+              properties:
                 description:
-                type: string
+                  type: string
                 waypoints:
-                type: array
-                items:
+                  type: array
+                  items:
                     type: object
                     properties:
-                    id:
+                      id:
                         type: integer
-                    name:
+                      name:
                         type: string
-                    order:
+                      order:
                         type: integer
-                    description:
+                      description:
                         type: string
-                    latitude:
+                      latitude:
                         type: number
                         format: float
-                    longitude:
+                      longitude:
                         type: number
                         format: float
-                    images:
+                      images:
                         type: array
                         items:
-                        type: string
+                          type: string
                 rating:
-                type: number
-                nullable: true
+                  type: number
+                  nullable: true
                 subscription:
-                type: boolean
-    404:
+                  type: boolean
+      404:
         description: Map not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
     """
     map_id = request.args.get('mapId')
     map_id = int(map_id)  # Ensure map_id is an integer
@@ -1963,7 +2497,7 @@ def get_map():
 
     # Get the user's subscription status
     traveller = Traveller.query.filter_by(userName=username).first()
-    subscription = traveller.subscription if traveller else False  # Если юзер не найден, считаем, что подписки нет
+    subscription = traveller.subscription if traveller else False  # If the user is not found, assume that there is no subscription
 
     # Retrieve the user's rating for this map if it exists
     review = Review.query.filter_by(mapId=map_id, userName=username).first()
@@ -2033,8 +2567,18 @@ def get_waypoint():
                 type: string
       400:
         description: Waypoint ID and Map ID are required
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
       404:
         description: Waypoint not found in the specified map
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
     """
     waypoint_id = request.args.get('waypointId')
     map_id = request.args.get('mapId')  # Needed to fetch map-specific details
@@ -2093,10 +2637,25 @@ def rate_map():
               type: string
       400:
         description: Invalid request or rating format
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
       404:
         description: Map not found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
       500:
         description: Couldn't save rating
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
     """
     data = request.json
     username = data.get("username")
@@ -2299,6 +2858,11 @@ def save_map_waypoint():
               type: string
       404:
         description: Map or waypoint not found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
     """
     data = request.json
     map_id = data.get("mapId")
@@ -2347,8 +2911,18 @@ def upload_map_waypoint_image():
     responses:
       200:
         description: Successfully uploaded images.
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
       404:
         description: Waypoint not found.
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
     """
     map_id = request.form.get("mapId")
     waypoint_id = request.form.get("waypointId")
@@ -2399,8 +2973,18 @@ def remove_map_waypoint_image():
     responses:
       200:
         description: Successfully removed image.
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
       404:
         description: Waypoint or image not found.
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
     """
     data = request.json
     map_id = data.get("mapId")
@@ -2448,6 +3032,11 @@ def get_travelers_and_maps():
     responses:
       200:
         description: List of users with their maps.
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
     """
     travellers = Traveller.query.all()  # Fetch all users
     traveller_list = []
@@ -2726,6 +3315,35 @@ def download_map_pdf():
 
 @app.route("/check-subscription", methods=["GET"])
 def check_subscription():
+    """
+    Checks the subscription status of a user.
+    ---
+    tags:
+      - Subscription
+    parameters:
+      - name: username
+        in: query
+        type: string
+        required: true
+        description: The username of the traveller
+    responses:
+      200:
+        description: Subscription status returned
+        schema:
+          type: object
+          properties:
+            subscription:
+              type: boolean
+              example: true
+      400:
+        description: Missing username parameter
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: Missing username parameter
+    """
     username = request.args.get('username')
     if not username:
         return jsonify({"error": "Missing username parameter"}), 400
@@ -2736,9 +3354,46 @@ def check_subscription():
 @app.route("/create-checkout-session", methods=["POST"])
 def create_checkout_session():
     """
-    Создает сессию оплаты в Stripe для подписки пользователя.
+    Creates a Stripe checkout session for the user's subscription.
+    ---
+    tags:
+      - Subscription
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              example: john_doe
+    responses:
+      200:
+        description: URL for checkout session
+        schema:
+          type: object
+          properties:
+            url:
+              type: string
+              example: https://checkout.stripe.com/session/abc123
+      400:
+        description: Missing username or bad request
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: Missing username parameter
+      500:
+        description: Internal server error
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: Stripe API failure
     """
-
     data = request.get_json()
     username = data.get('username')
     if not username:
@@ -2746,38 +3401,79 @@ def create_checkout_session():
 
     traveller = Traveller.query.filter_by(userName=username).first()
 
-    # Проверяем, есть ли у пользователя зарегистрированный Stripe Customer ID
+    # Check if the user has a registered Stripe Customer ID
     if not traveller.stripe_customer_id:
-        # Если нет, создаем нового клиента в Stripe
+        # If not, create a new customer in Stripe
         customer = stripe.Customer.create(
-            email=traveller.email,  # Привязываем email пользователя
-            name=f"{traveller.name} {traveller.surname}",  # Передаем его имя и фамилию
+            email=traveller.email,  # Link the user's email address
+            name=f"{traveller.name} {traveller.surname}",  # Pass their first and last name
         )
-        traveller.stripe_customer_id = customer.id  # Сохраняем идентификатор клиента в БД
-        db.session.commit()  # Фиксируем изменения
+        traveller.stripe_customer_id = customer.id  # Save the customer ID in the database
+        db.session.commit()  # Commit the changes
     else:
-        # Если ID уже есть, загружаем клиента из Stripe
+        # If the ID is already there, retrieve the customer from Stripe
         customer = stripe.Customer.retrieve(traveller.stripe_customer_id)
 
     try:
-        # Создаем checkout-сессию в Stripe для оформления подписки
+        # Create a Stripe checkout session for the subscription
         checkout_session = stripe.checkout.Session.create(
-            customer=customer.id,  # Привязываем сессию к пользователю
-            payment_method_types=["card"],  # Разрешаем оплату картой
-            line_items=[{"price": PRICE_ID, "quantity": 1}],  # Подключаем план подписки
-            mode="subscription",  # Указываем, что это подписка
-            success_url="https://wandermap-1i48.onrender.com/home",  # URL при успешной оплате
-            cancel_url="https://wandermap-1i48.onrender.com/home",  # URL при отмене
+            customer=customer.id,  # Link the session to the user
+            payment_method_types=["card"],  # Allow payment by card
+            line_items=[{"price": PRICE_ID, "quantity": 1}],  # Attach the subscription plan
+            mode="subscription",  # Specify that this is a subscription
+            #success_url="https://wandermap-1i48.onrender.com/home",  # URL on successful payment
+            #cancel_url="https://wandermap-1i48.onrender.com/home",  # URL on cancellation
             
-            #success_url="http://localhost:10000/home",  # URL при успешной оплате
-            #cancel_url="http://localhost:10000/home",  # URL при отмене
+            success_url="http://localhost:10000/home",  # URL on successful payment (local)
+            cancel_url="http://localhost:10000/home",  # URL on cancellation (local)
         )
-        return jsonify({"url": checkout_session.url})  # Отправляем клиенту ссылку на оплату
+        return jsonify({"url": checkout_session.url})  # Send the payment link to the client
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route("/unsubscribe", methods=["POST"])
 def unsubscribe():
+    """
+    Cancels a user's subscription.
+    ---
+    tags:
+      - Subscription
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              example: john_doe
+    responses:
+      200:
+        description: Unsubscription successful or already unsubscribed
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: You're now unsubscribed from WanderMap
+      400:
+        description: Missing username
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: Missing username parameter
+      404:
+        description: User not found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: User not found
+    """
     data = request.get_json()
     username = data.get('username')
     if not username:
@@ -2798,9 +3494,34 @@ def unsubscribe():
 
 @app.route("/webhook", methods=["POST"])
 def stripe_webhook():
+    """
+    Stripe webhook handler for processing subscription events.
+    ---
+    tags:
+      - Subscription
+    consumes:
+      - application/json
+    responses:
+      200:
+        description: Webhook processed successfully
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: success
+      400:
+        description: Invalid payload or signature
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: Invalid payload
+    """
     payload = request.get_data(as_text=True)
     sig_header = request.headers.get("Stripe-Signature")
-    endpoint_secret = "whsec_PhpMBvwz3RihXALeCtX9wwMFN2VETwcn"  # Из настроек Stripe
+    endpoint_secret = "whsec_PhpMBvwz3RihXALeCtX9wwMFN2VETwcn"  # From Stripe settings
 
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
@@ -2809,17 +3530,17 @@ def stripe_webhook():
     except stripe.error.SignatureVerificationError as e:
         return jsonify({"error": "Invalid signature"}), 400
 
-    # Проверяем, что платеж прошел
+    # Check if the payment was successful
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
         customer_id = session["customer"]
         subscription_id = session["subscription"]
 
-        # Находим пользователя в БД
+        # Find the user in the database
         traveller = Traveller.query.filter_by(stripe_customer_id=customer_id).first()
         if traveller:
-            traveller.subscription = True  # Обновляем подписку
-            traveller.subscription_id = subscription_id  # Сохраняем ID подписки
+            traveller.subscription = True  # Update subscription status
+            traveller.subscription_id = subscription_id  # Save subscription ID
             db.session.commit()
 
     return jsonify({"status": "success"}), 200
