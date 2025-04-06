@@ -26,7 +26,11 @@
     <div class="main-content">
         <h1>How To Use</h1>
         <h3>Bla bla bla</h3>
-        <article>Bla bla bla</article>
+        
+        <video controls autoplay loop muted>
+            <source src="{{ url_for('static', filename='videos/how_to_use.mp4') }}" type="video/mp4">
+            Your browser doesn't support tag video.
+        </video>
     </div>
 
     <footer>

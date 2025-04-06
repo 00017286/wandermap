@@ -151,54 +151,43 @@ window.onload = () => {
     
     // Subscribe
     const subscribeBtn = document.getElementById("subscribe");
-    subscribeBtn.addEventListener("click", async () => {
-        window.location.href = `/${encodeURIComponent(username)}/my_profile?scrollToSubscription=true`;
-        return;
-    });
-
-    document.getElementById("subscribe-button").addEventListener("click", function () {
-        fetch("/create-checkout-session", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ username: username })
-         })
-        .then(response => response.json())
-        .then(session => {
-            window.location.href = session.url; // Перенаправляем пользователя на Stripe Checkout
-        })
-        .catch(error => console.error("Error:", error));
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-    const unsubscribeBtn = document.getElementById("unsubscribe-button");
-
-    if (!unsubscribeBtn) {
-        console.error("Unsubscribe button not found!");
-        return;
+    if (subscribeBtn) {
+        subscribeBtn.addEventListener("click", async () => {
+            window.location.href = `/${encodeURIComponent(username)}/my_profile?scrollToSubscription=true`;
+        });
     }
 
-    console.log("Unsubscribe button found!");
+    const stripeBtn = document.getElementById("subscribe-button");
+    if (stripeBtn) {
+        stripeBtn.addEventListener("click", function () {
+            fetch("/create-checkout-session", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username: username })
+            })
+            .then(response => response.json())
+            .then(session => {
+                window.location.href = session.url;
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    }
 
-    unsubscribeBtn.addEventListener("click", () => {
-        console.log("Unsubscribe button clicked!"); // Проверяем, сработал ли клик
-
-        const username = getUsernameFromCookie();
-        console.log("Username:", username);
-
-        fetch("/unsubscribe", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: username }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Response:", data);
-            alert(data.message);
-        })
-        .catch(error => console.error("Error:", error));
-    });
-});
-
+    const unsubscribeBtn = document.getElementById("unsubscribe-button");
+    if (unsubscribeBtn) {
+        unsubscribeBtn.addEventListener("click", function () {
+            fetch("/unsubscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: username }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                showAlert(data.message);
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    } 
 };
