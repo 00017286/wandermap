@@ -311,6 +311,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 showWarning("Specify a password for your account");
                 return;
             }
+            if (data.badPassword) {
+                showWarning("Password must be 5+ chars, with a digit and special symbol (!@#$%^&*(),.?:{}|<>).");
+                return;
+            }
             if (data.userExists) {
                 showWarning("A user with this username already exists. Try to sign in instead.");
                 return;

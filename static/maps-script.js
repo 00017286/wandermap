@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     
         // Получаем статус подписки
-        const response = await fetch(`/get-map?mapId=${encodeURIComponent(mapId)}`);
+        const response = await fetch(`/get-map?mapId=${encodeURIComponent(mapId)}&username=${encodeURIComponent(getUsernameFromCookie())}`)
         if (!response.ok) {
             alert("Failed to get map details!");
             return;

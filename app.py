@@ -20,6 +20,7 @@ import math
 from email.mime.text import MIMEText  # formatting email messages
 from fpdf import FPDF  # generating PDF files
 import folium  # generating interactive maps
+import re  # for password validation
 
 from selenium import webdriver  # automating web browser interactions
 from selenium.webdriver.chrome.service import Service  # manage ChromeDriver service
@@ -502,7 +503,7 @@ def user_sign_in():
                 example: "traveller01"
               password:
                 type: string
-                example: "mypassword"
+                example: "mypassword1!"
     responses:
       200:
         description: Successfully authenticated or blocked user
@@ -521,7 +522,7 @@ def user_sign_in():
                   type: boolean
                   example: false
       400:
-        description: Parameters not provided
+        description: Missing parameters)
         content:
           application/json:
             schema:
@@ -548,7 +549,7 @@ def user_sign_in():
 
         if not userName or not password:
             return jsonify({'error': 'Parameters not provided'}), 400
-
+        
         traveller = Traveller.query.filter_by(userName=userName).first()
         
         # If user is blocked, return a blocked response
@@ -626,7 +627,7 @@ def user_sign_up():
                   type: string
                   example: "new_user"
       400:
-        description: Missing username or password
+        description: Invalid request (e.g. missing parameters or invalid password)
         content:
           application/json:
             schema:
@@ -634,7 +635,15 @@ def user_sign_up():
               properties:
                 error:
                   type: string
-                  example: "Missing username or password"
+            examples:
+              missingParams:
+                summary: Missing username or password
+                value:
+                  error: "Parameters not provided"
+              invalidPassword:
+                summary: Password does not meet complexity requirements
+                value:
+                  error: "Your password has to be at least 5 characters, one of which is a digit and one of which is a special symbol (!@#$%^&*(),.?\":{|<>)"
       500:
         description: Internal server error
         content:
@@ -652,9 +661,13 @@ def user_sign_up():
         password = data.get('password')
 
         if not userName:
-            return jsonify({'error': 'Missing username'}), 400
+            return jsonify({'noUsername': True}), 400
         if not password:
-            return jsonify({'error': 'Missing password'}), 400
+            return jsonify({'noPassword': True}), 400
+        
+        # Password validation
+        if len(password) < 5 or not re.search(r'\d', password) or not re.search(r'[!@#$%^&*(),.?:{}|<>]', password):
+            return jsonify({'badPassword': True}), 400
 
         # Check if the user already exists
         if Traveller.query.filter_by(userName=userName).first():
@@ -2386,8 +2399,6 @@ def get_all_maps():
                   type: string
     """
     username = request.args.get("username")
-    if not username:
-        return jsonify({"error": "Missing username"}), 400
     
     traveller = Traveller.query.filter_by(userName=username).first()
     subscription = traveller.subscription if traveller else False  # User subsctription

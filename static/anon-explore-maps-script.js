@@ -93,7 +93,7 @@ function searchMaps() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // Функция загрузки карт пользователя 
 function fetchMaps(username) {
-    return fetch(`/all-maps?username=${encodeURIComponent(username)}`)
+    return fetch(`/all-maps?username=${' '}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Server responded with ${response.status}`);
@@ -107,16 +107,6 @@ function fetchMaps(username) {
             if (!data.maps || data.maps.length === 0) {
                 mapList.innerHTML = "<p>No maps found. Start by creating a new one!</p>";
                 return;
-            }
-
-            // Получаем текущий вариант сортировки
-            const sortOption = document.getElementById("sortOptions").value;
-
-            // Сортируем карты в зависимости от выбранного варианта
-            if (sortOption === "rating-desc") {
-                data.maps.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-            } else if (sortOption === "rating-asc") {
-                data.maps.sort((a, b) => (a.rating || 0) - (b.rating || 0));
             }
 
             data.maps.forEach(map => {
@@ -332,14 +322,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("viewMapPopup").style.display = "flex";
                 document.getElementById("mapIcon").style.display = "flex";
             }
-        });
-    }
-
-    // Сортировка карт
-    const sortOptions = document.getElementById("sortOptions");
-    if (sortOptions) {
-        sortOptions.addEventListener("change", () => {
-            if (username) fetchMaps(username);
         });
     }
 
