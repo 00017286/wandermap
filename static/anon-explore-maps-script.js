@@ -91,7 +91,7 @@ function searchMaps() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-// Функция загрузки карт пользователя 
+// User's card loading function
 function fetchMaps(username) {
     return fetch(`/all-maps?username=${' '}`)
         .then(response => {
@@ -113,12 +113,12 @@ function fetchMaps(username) {
                 const mapElement = document.createElement("div");
                 mapElement.classList.add("map-item");
 
-                // Контейнер для изображений точек маршрута
+                // Container for waypoint images
                 const waypointImages = document.createElement("div");
                 waypointImages.classList.add("waypoint-images");
 
                 map.waypoints.forEach(waypoint => {
-                    if (!waypoint.images || waypoint.images.length === 0) return; // Пропускаем, если нет изображений
+                    if (!waypoint.images || waypoint.images.length === 0) return; // Skip if there are no images
 
                     waypoint.images.forEach(imageName => {
                         const img = document.createElement("img");
@@ -129,13 +129,13 @@ function fetchMaps(username) {
                     });
                 });
 
-                // Создаем кнопку с data-map-id
+                // Creating a button with a data-map-id
                 const viewMapButton = document.createElement("a");
                 viewMapButton.classList.add("view-map");
                 viewMapButton.textContent = "View Map";
-                viewMapButton.setAttribute("data-map-id", map.id); // Добавляем атрибут с ID карты
+                viewMapButton.setAttribute("data-map-id", map.id); // Adding an attribute from the card ID
 
-                // Заполняем HTML карточки карты
+                // Filling in the HTML of the map card
                 mapElement.innerHTML = `
                     <h2>${map.description || "Unnamed Map"}</h2>
                     <h3>
@@ -158,20 +158,20 @@ function fetchMaps(username) {
         });
 }
 
-// Загрузка карт после полной загрузки страницы
+// Loading maps after the page is fully loaded
 window.onload = () => {
-    let username = getUsernameFromCookie();  // Используем let, чтобы присвоить значение в дальнейшем
+    let username = getUsernameFromCookie();  // Use let to assign a value later
 
     if (!username) {
-        username = 'unauthorized';  // Теперь это не вызывает ошибку
+        username = 'unauthorized';
     }
 
-    fetchMaps(username).then(() => searchMaps()); // Применяем фильтр после загрузки карт
+    fetchMaps(username).then(() => searchMaps()); // Apply the filter after loading the maps
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// поп-ап по просмотру карты
+// Pop-up to view map
 document.addEventListener("DOMContentLoaded", async () => {
     
     // Получаем ссылки на элементы поп-апа и формы

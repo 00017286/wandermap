@@ -105,23 +105,23 @@ function fetchMaps(username) {
             const mapList = document.getElementById("mapList");
             mapList.innerHTML = "";
 
-            // Если карт нет, показываем сообщение
+            // If no maps, show text
             if (!data.maps || data.maps.length === 0) {
                 mapList.innerHTML += "<p>No maps found. Start by creating a new one!</p>";
                 return;
             }
 
-            // Получаем текущую опцию сортировки
+            // Get current sorting option
             const sortOption = document.getElementById("sortOptions").value;
 
-            // Сортировка карт по рейтингу
+            // Sort maps by rating
             if (sortOption === "rating-desc") {
                 data.maps.sort((a, b) => (b.rating || 0) - (a.rating || 0));
             } else if (sortOption === "rating-asc") {
                 data.maps.sort((a, b) => (a.rating || 0) - (b.rating || 0));
             }
 
-            // Отображаем карты
+            // Display maps
             data.maps.forEach(map => {
                 const mapElement = document.createElement("div");
                 mapElement.classList.add("map-item");
@@ -161,11 +161,11 @@ function fetchMaps(username) {
                 mapList.appendChild(mapElement);
             });
 
-            // Если подписка отключена и пришло ограниченное число карт
+            // If subscription is disabled and limited number of maps have arrived
             if (data.subscription === false) {
                 const subscriptionBlock = document.createElement("div");
                 subscriptionBlock.id = "subscriptionBlock";
-                subscriptionBlock.style.textAlign = "center"; // Центрируем кнопку
+                subscriptionBlock.style.textAlign = "center";
 
                 const subscribeButton = document.createElement("button");
                 subscribeButton.id = "subscribeToViewAllMaps";
@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     elements.reviewIcon.addEventListener("click", async () => {
         const mapId = document.getElementById("viewMapPopup").getAttribute("data-map-id");
 
-        // Получаем статус подписки
+        // Get subscription status
         const response1 = await fetch(`/get-map?mapId=${encodeURIComponent(mapId)}&username=${encodeURIComponent(username)}`);
         if (!response1.ok) {
             alert("Failed to get map details!");
@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         const data1 = await response1.json();
         if (data1.subscription === false) {
-            // Если подписка неактивна, переводим на страницу профиля для оформления подписки
+            // If subscription is inactive, transfer to profile page for subscribing
             window.location.href = `/${encodeURIComponent(username)}/my_profile?scrollToSubscription=true`;
             return;
         }
@@ -456,7 +456,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const waypoint = await response.json();
                 if (waypoint) loadWaypointData(waypoint);
             } catch (error) {
-                console.error("Ошибка загрузки точки маршрута:", error);
+                console.error("Error loading a waypoint:", error);
             }
         });
     }

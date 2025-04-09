@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
     
-        // Получаем статус подписки
+        // Get subscription status
         const response = await fetch(`/get-map?mapId=${encodeURIComponent(mapId)}&username=${encodeURIComponent(getUsernameFromCookie())}`)
         if (!response.ok) {
             alert("Failed to get map details!");
@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
     
-        // Если подписка есть, продолжаем скачивание PDF
+        // If has subscription, continue downloading the PDF
         showWarning("Downloading may take around 30 seconds. Please, wait!");
     
         const pdfResponse = await fetch(`/download-map-pdf?mapId=${encodeURIComponent(mapId)}`);

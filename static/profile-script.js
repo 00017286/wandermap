@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         behavior: "smooth",
                         block: "start"
                     });
-                }, 500); // Ждём 500 мс на случай отложенной загрузки блока
+                }, 500); // Waiting for 500 ms in case of delayed block loading
             }
         }
     }

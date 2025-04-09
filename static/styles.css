@@ -441,8 +441,8 @@ input[type="text"], input[type="password"], input[type="date"], input[type="emai
 }
 
 .alert.hide {
-    transform: translateX(100%); /* убираю за правый край */
-    opacity: 0; /* прозрачный */
+    transform: translateX(100%);
+    opacity: 0;
 }
 
 .warning {
@@ -465,8 +465,8 @@ input[type="text"], input[type="password"], input[type="date"], input[type="emai
     transform: translateX(0);
 }
 .warning.hide {
-    transform: translateX(100%); /* убираю за правый край */
-    opacity: 0; /* прозрачный */
+    transform: translateX(100%);
+    opacity: 0;
 }
 
 .error {
@@ -649,8 +649,8 @@ button[type="button"]:hover {
 
 #mapList {
     display: flex;
-    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
-    gap: 16px; /* Отступы между картами */
+    flex-wrap: wrap;
+    gap: 16px;
     padding: 20px;
     justify-content: center;
 }
