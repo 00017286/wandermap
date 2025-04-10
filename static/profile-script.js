@@ -14,7 +14,6 @@ function getUsernameFromCookie() {
     }
     return ''; // Return an empty string if not found
 }
-
 // Function to display success notifications
 function showAlert(message) {
     var alertElement = document.createElement('div');
