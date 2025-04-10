@@ -1535,12 +1535,6 @@ def get_recommendations():
         _, traveller_indices = travellers_index.search(traveller_vector, 30)
         traveller_indices = [int(idx) for idx in traveller_indices[0]]  # Convert FAISS results to list of indices
 
-        # Retrieve waypoints visited by similar travellers
-        traveller_waypoint_ids = {
-            Traveller.query.get(idx).waypointId
-            for idx in traveller_indices if idx != -1 and Traveller.query.get(idx) is not None
-        }
-
         # Search based on similar travellers
         _, waypoint_indices_t = waypoints_index.search(traveller_vector, 30)
         results += [(idx, 0.5) for idx in waypoint_indices_t[0] if idx != -1]  # Weight 0.5
