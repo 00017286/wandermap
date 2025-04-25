@@ -1494,6 +1494,7 @@ def get_recommendations():
     # Extract waypoint IDs from draft map
     draft_waypoint_ids = {dmw.waypointId for dmw in draft_map_waypoints}
     draft_waypoints = [Waypoint.query.get(wp_id) for wp_id in draft_waypoint_ids]
+    print(draft_waypoints)
 
     # Load FAISS indexes for travellers and waypoints similarity search
     travellers_index = faiss.read_index("faiss_index/travellers_index.faiss")
