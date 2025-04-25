@@ -42,10 +42,10 @@ CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 
 # Database connection settings
-app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
-# app.config['SQLALCHEMY_DATABASE_URI'] = (
-#    'mssql+pymssql://admin:345ertERT!!!@database-1.cavoeg0u27ey.us-east-1.rds.amazonaws.com:1433/WanderMap_DB'
-#)
+# app.config['SQLALCHEMY_DATABASE_URI'] = ('mssql+pyodbc://DESKTOP-RC369C7\\SQLEXPRESS01/WanderMap_DB?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes')
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+  'mssql+pymssql://admin:123qweQWE!!!@wandermap.cavoeg0u27ey.us-east-1.rds.amazonaws.com:1433/wandermap'
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable SQLAlchemy modification tracking for performance improvement
 
 # Initialize database object for interacting with db
@@ -3427,11 +3427,12 @@ def create_checkout_session():
             payment_method_types=["card"],  # Allow payment by card
             line_items=[{"price": PRICE_ID, "quantity": 1}],  # Attach the subscription plan
             mode="subscription",  # Specify that this is a subscription
-            #success_url="https://wandermap-1i48.onrender.com/home",  # URL on successful payment
-            #cancel_url="https://wandermap-1i48.onrender.com/home",  # URL on cancellation
             
-            success_url="http://localhost:10000/home",  # URL on successful payment (local)
-            cancel_url="http://localhost:10000/home",  # URL on cancellation (local)
+            success_url="https://wandermap-1i48.onrender.com/home",  # URL on successful payment
+            cancel_url="https://wandermap-1i48.onrender.com/home",  # URL on cancellation
+            
+            #success_url="http://localhost:10000/home",  # URL on successful payment (local)
+            #cancel_url="http://localhost:10000/home",  # URL on cancellation (local)
         )
         return jsonify({"url": checkout_session.url})  # Send the payment link to the client
     except Exception as e:
