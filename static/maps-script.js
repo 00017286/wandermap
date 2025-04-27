@@ -403,8 +403,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Subscribe
 
-    subscribeBtn.addEventListener("click", async () => {
-        window.location.href = `/${encodeURIComponent(getUsernameFromCookie())}/my_profile?scrollToSubscription=true`;
-        return;
+    //subscribeBtn.addEventListener("click", async () => {
+    //    window.location.href = `/${encodeURIComponent(getUsernameFromCookie())}/my_profile?scrollToSubscription=true`;
+    //    return;
+    //});
+
+    const username = getUsernameFromCookie();
+    fetch(`/check-subscription?username=${encodeURIComponent(username)}`, {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.subscription) {
+            subscribeBtn.style.display = "none";
+        }
+    })
+    .catch(error => {
+        console.error("Error checking subscription:", error);
     });
+    
 });

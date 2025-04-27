@@ -185,6 +185,10 @@ window.onload = () => {
             .then(response => response.json())
             .then(data => {
                 showAlert(data.message);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
             })
             .catch(error => console.error("Error:", error));
         });

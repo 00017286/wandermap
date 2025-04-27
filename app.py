@@ -643,7 +643,7 @@ def user_sign_up():
               invalidPassword:
                 summary: Password does not meet complexity requirements
                 value:
-                  error: "Your password has to be at least 5 characters, one of which is a digit and one of which is a special symbol (!@#$%^&*(),.?\":{|<>)"
+                  error: "Your password has to be at least 5 characters, one of which is a digit and one of which is a special symbol"
       500:
         description: Internal server error
         content:
@@ -3427,7 +3427,6 @@ def create_checkout_session():
             payment_method_types=["card"],  # Allow payment by card
             line_items=[{"price": PRICE_ID, "quantity": 1}],  # Attach the subscription plan
             mode="subscription",  # Specify that this is a subscription
-            
             success_url="https://wandermap-1i48.onrender.com/home",  # URL on successful payment
             cancel_url="https://wandermap-1i48.onrender.com/home",  # URL on cancellation
             
