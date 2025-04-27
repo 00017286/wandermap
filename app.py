@@ -3044,7 +3044,8 @@ def get_travelers_and_maps():
             error:
               type: string
     """
-    travellers = Traveller.query.all()  # Fetch all users
+    #travellers = Traveller.query.all()  # Fetch all users
+    travellers = Traveller.query.limit(15).all()
     traveller_list = []
     
     for traveller in travellers:
